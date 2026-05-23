@@ -9,13 +9,13 @@
 **raw.githubusercontent.com（权威源）：**
 
 ```
-https://raw.githubusercontent.com/baiyu087/shadowrocket-config/main/shadowrocket.conf
+https://raw.githubusercontent.com/Duskwander87/shadowrocket-config/main/shadowrocket.conf
 ```
 
 **jsDelivr CDN（国内推荐，速度更快）：**
 
 ```
-https://cdn.jsdelivr.net/gh/baiyu087/shadowrocket-config@main/shadowrocket.conf
+https://cdn.jsdelivr.net/gh/Duskwander87/shadowrocket-config@main/shadowrocket.conf
 ```
 
 ## 使用方法
