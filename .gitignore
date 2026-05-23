@@ -1,0 +1,11 @@
+# 系统生成文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器临时文件
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
