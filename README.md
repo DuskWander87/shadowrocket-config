@@ -51,18 +51,6 @@ https://cdn.jsdelivr.net/gh/Duskwander87/shadowrocket-config@main/shadowrocket.c
 | `GEOIP,CN` | DIRECT | 内置 GeoIP |
 | 其他 | PROXY | FINAL 兜底 |
 
-## 与原版（cf.buliang0.cf）的差异
-
-| 项目 | 原版 | 本版 | 原因 |
-|---|---|---|---|
-| `dns-server` | `system` | 4 路 DoH | 真正防泄露，DNS 全程加密 |
-| `private-ip-answer` | `true` | `false` | 防 DNS rebinding |
-| `dns-direct-fallback-proxy` | `true` | `false` | 防止意外代理流量 |
-| 广告规则顺序 | ChinaDomain 之后 | ChinaDomain 之前 | 广告优先拦截 |
-| `FINAL` | `PROXY` | `PROXY,dns-failed` | 挽救被污染解析的请求 |
-| `udp-policy-not-supported-behaviour` | 缺失 | `REJECT` | 防 UDP 流量泄露到直连 |
-| URL Rewrite 正则 | `(www.)` | `(www\.)` | 修复点号未转义的 bug |
-
 ## 维护
 
 ### 规则集同步
