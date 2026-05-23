@@ -25,10 +25,6 @@ https://cdn.jsdelivr.net/gh/Duskwander87/shadowrocket-config@main/shadowrocket.c
 3. 等待下载完成后，长按该配置 → 「使用配置」
 4. 配置生效后，规则集会自动从远端拉取（首次加载需联网）
 
-**手动刷新规则集：**
-
-下拉「配置」页面即可强制刷新所有远程 RULE-SET。Shadowrocket 默认每 24 小时自动刷新一次。
-
 ## 核心特性
 
 ### DNS 防泄露
