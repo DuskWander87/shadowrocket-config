@@ -1,6 +1,6 @@
 # Shadowrocket 防 DNS 泄露配置
 
-基于 [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR) 规则集的 Shadowrocket 配置文件，全程 DoH 加密 DNS，杜绝泄露。
+基于 [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR) 规则集的 Shadowrocket 配置文件，国内 UDP + 境外 DoH 混合策略，兼顾防泄露与 CDN 调度精准。
 
 ## 订阅链接
 
@@ -29,9 +29,9 @@ https://cdn.jsdelivr.net/gh/Duskwander87/shadowrocket-config@main/shadowrocket.c
 
 ### DNS 防泄露
 
-- **全程 DoH 加密**：阿里 DoH + 腾讯 DoH + Cloudflare DoH + Google DoH 四路并发
-- **国内站点保最优 CDN**：阿里/腾讯 DoH 优先响应国内域名
-- **境外站点防污染**：Cloudflare/Google DoH 兜底，自动剔除被污染的 IP
+- **国内 UDP + 境外 DoH 混合并发**：阿里/腾讯 UDP + Cloudflare/Google DoH 四路并发取最快
+- **国内站点保最优 CDN**：UDP DNS 携带 ECS 客户端子网，CDN 调度精准到本地节点
+- **境外站点防污染**：Cloudflare/Google DoH 加密兜底，自动剔除被污染的 IP
 - **禁用 IPv6**：避免 v6 通道绕过 DNS 配置造成泄露
 - **拒绝私有 IP 应答**：防 DNS rebinding 攻击
 - **DNS 失败请求走代理重试**：`FINAL,PROXY,dns-failed`
