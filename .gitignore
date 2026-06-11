@@ -11,3 +11,4 @@ desktop.ini
 .idea/
 
 .serena/
+.claude/settings.local.json
