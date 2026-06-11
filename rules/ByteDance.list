@@ -1,5 +1,7 @@
-# 字节跳动系域名直连规则
-# 仓库: https://github.com/Duskwander87/shadowrocket-config
+# 字节跳动系域名直连规则 —— ACL4SSR ChinaDomain.list 补充
+# ACL4SSR 已收录 bytedance.com / douyin.com / toutiao.com 等主域名
+# 本文件仅收录 ACL4SSR 尚未覆盖的字节系 CDN / 静态资源 / 业务子域
+# 仓库: https://github.com/DuskWander87/shadowrocket-config
 # 更新: 手动维护，新增域名请先通过 domain-verify skill 确认归属
 
 DOMAIN-SUFFIX,bytegecko.com
