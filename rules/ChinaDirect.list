@@ -1,0 +1,29 @@
+# 国内域名直连规则 —— ACL4SSR ChinaDomain.list 补充
+# 收录 ACL4SSR 尚未覆盖的国内厂商 CDN / 静态资源 / 业务 / SDK 域名，统一直连
+# 仓库: https://github.com/DuskWander87/shadowrocket-config
+# 更新: 手动维护，新增域名请先通过 domain-verify skill 确认归属
+
+# 字节跳动系（ACL4SSR 已收录 bytedance.com / douyin.com / toutiao.com 等主域名）
+DOMAIN-SUFFIX,bytegecko.com
+DOMAIN-SUFFIX,bytehwm.com
+DOMAIN-SUFFIX,bytemastatic.com
+DOMAIN-SUFFIX,bytecdn.com
+DOMAIN-SUFFIX,byteeffecttos.com
+DOMAIN-SUFFIX,bytemaimg.com
+DOMAIN-SUFFIX,ecombdimg.com
+DOMAIN-SUFFIX,ecombdapi.com
+DOMAIN-SUFFIX,ecombdpage.com
+DOMAIN-SUFFIX,ecombdstatic.com
+DOMAIN-SUFFIX,idouyinvod.com
+DOMAIN-SUFFIX,doupay.com
+
+# 招商银行 (China Merchants Bank, cmbchina.com)
+DOMAIN-SUFFIX,cmbimg.com
+DOMAIN-SUFFIX,joying.com
+
+# 随手记 (随手科技, feidee.com)
+DOMAIN-SUFFIX,feidee.com
+DOMAIN-SUFFIX,feidee.net
+
+# MobTech 秒验 SDK (上海掌之淘信息技术, zztfly.com)
+DOMAIN-SUFFIX,zztfly.com

@@ -1,9 +1,0 @@
-# 金融机构域名直连规则 —— ACL4SSR ChinaDomain.list 补充
-# 收录国内银行、证券、保险等金融机构的 CDN / 静态资源 / 业务域名
-# ACL4SSR 未覆盖的金融类域名统一维护于此
-# 仓库: https://github.com/DuskWander87/shadowrocket-config
-# 更新: 手动维护，新增域名请先通过 domain-verify skill 确认归属
-
-# 招商银行 (China Merchants Bank, cmbchina.com)
-DOMAIN-SUFFIX,cmbimg.com
-DOMAIN-SUFFIX,joying.com
