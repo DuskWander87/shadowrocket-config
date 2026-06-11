@@ -1,0 +1,15 @@
+# 字节跳动系域名直连规则
+# 仓库: https://github.com/Duskwander87/shadowrocket-config
+# 更新: 手动维护，新增域名请先通过 domain-verify skill 确认归属
+
+DOMAIN-SUFFIX,bytegecko.com
+DOMAIN-SUFFIX,bytehwm.com
+DOMAIN-SUFFIX,bytemastatic.com
+DOMAIN-SUFFIX,bytecdn.com
+DOMAIN-SUFFIX,byteeffecttos.com
+DOMAIN-SUFFIX,bytemaimg.com
+DOMAIN-SUFFIX,ecombdimg.com
+DOMAIN-SUFFIX,ecombdapi.com
+DOMAIN-SUFFIX,ecombdpage.com
+DOMAIN-SUFFIX,idouyinvod.com
+DOMAIN-SUFFIX,doupay.com
