@@ -9,13 +9,13 @@
 **raw.githubusercontent.com（权威源）：**
 
 ```
-https://raw.githubusercontent.com/Duskwander87/shadowrocket-config/main/shadowrocket.conf
+https://raw.githubusercontent.com/DuskWander87/shadowrocket-config/main/shadowrocket.conf
 ```
 
 **jsDelivr CDN（国内推荐，速度更快）：**
 
 ```
-https://cdn.jsdelivr.net/gh/Duskwander87/shadowrocket-config@main/shadowrocket.conf
+https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/shadowrocket.conf
 ```
 
 ## 使用方法
@@ -36,10 +36,16 @@ https://cdn.jsdelivr.net/gh/Duskwander87/shadowrocket-config@main/shadowrocket.c
 - **拒绝私有 IP 应答**：防 DNS rebinding 攻击
 - **DNS 失败请求走代理重试**：`FINAL,PROXY,dns-failed`
 
+### URL 重写
+
+- **Google 域名重定向**：`g.cn` / `google.cn` 自动 302 跳转至 `google.com`，避免访问国内镜像
+
 ### 分流策略
 
 | 类型 | 处理 | 来源 |
 |---|---|---|
+| 广告 / 追踪 SDK 补充拦截 | REJECT | 自建 Reject.list |
+| 国内直连补充域名 | DIRECT | 自建 ChinaDirect.list |
 | 局域网 / 解禁名单 | DIRECT | ACL4SSR LocalAreaNetwork / UnBan |
 | 广告域名 | REJECT | ACL4SSR BanAD / BanProgramAD |
 | 国内域名 / 流媒体 | DIRECT | ACL4SSR ChinaDomain / ChinaMedia |
@@ -51,33 +57,49 @@ https://cdn.jsdelivr.net/gh/Duskwander87/shadowrocket-config@main/shadowrocket.c
 
 ### 规则集同步
 
-所有 `RULE-SET` 都引用 [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR) 仓库的远程文件，**上游一更新，下次 Shadowrocket 刷新订阅时自动同步**。无需手动维护规则列表。
+`RULE-SET` 分两类：
+
+- **ACL4SSR 远程规则**：引用 [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR) 仓库，上游更新后下次刷新订阅自动同步，无需手动维护。
+- **自建规则**（`rules/` 目录）：`Reject.list` 和 `ChinaDirect.list` 引用本仓库，手动维护，新增域名推送后下次刷新生效。
 
 ### 修改配置
 
 直接编辑 `shadowrocket.conf` 并推送到本仓库，Shadowrocket 下次刷新订阅即生效。
 
+### 自建规则维护
+
+| 文件 | 用途 |
+|---|---|
+| `rules/Reject.list` | ACL4SSR 未覆盖的广告 / 追踪 SDK 域名，新增后走 REJECT |
+| `rules/ChinaDirect.list` | ACL4SSR 未覆盖的国内厂商域名，新增后走 DIRECT |
+
+新增域名前建议先用 `domain-verify` skill 确认归属，避免误添加抢注域名。
+
 ### 切换 CDN 源
 
-如发现 `raw.githubusercontent.com` 在国内拉取失败，临时改用 jsDelivr 订阅链接即可。如需让配置文件内部的 `RULE-SET` 也走 jsDelivr，把所有：
+如发现 `raw.githubusercontent.com` 在国内拉取失败，临时改用 jsDelivr 订阅链接即可。如需让配置文件内部的 `RULE-SET` 也走 jsDelivr，替换以下两处前缀：
+
+**ACL4SSR 规则：**
 
 ```
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/
 ```
-
-替换为：
-
+→
 ```
 https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/
 ```
 
+**自建规则：**
+
+```
+https://raw.githubusercontent.com/DuskWander87/shadowrocket-config/main/rules/
+```
+→
+```
+https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/rules/
+```
+
 文件路径保持不变。
-
-## 安全说明
-
-- 本配置文件不含任何节点信息、token、密码或个人数据
-- 代理节点请在 Shadowrocket App 内单独管理，不要写入本仓库
-- 即使仓库公开，配置文件被任意他人获取也无安全影响
 
 ## 许可证
 
