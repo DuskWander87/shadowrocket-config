@@ -12,11 +12,21 @@ description: "验证域名是否真实存在、归属哪家公司，排除抢注
 ### 1. 查 NS 记录（判断域名是否存在及归属）
 
 ```bash
+# Linux / macOS
 dig +short <domain> NS
+
+# Windows（系统自带 nslookup，无 dig）
+nslookup -type=NS <domain>
 ```
+
+> 按运行环境二选一即可：Unix/macOS 用 `dig`，Windows 用 `nslookup`。
 
 - 有 NS 记录 → 域名已注册，进入归属判断
 - 无 NS 记录 → 域名不存在，可能是日志拼写错误，**不应添加规则**
+  - `dig`：输出为空
+  - `nslookup`：出现以 `***` 开头、含 `Non-existent domain` 的报错（中文系统中间文字可能本地化或显示为乱码，认准 `Non-existent domain` / `NXDOMAIN` / `Server failed` 关键词即可；该报错走 **stderr**）
+
+> **读 nslookup 输出**：忽略开头的 `服务器:` / `Address:`（那是本机 DNS，中文 Windows 下可能显示为乱码 `������`，无害）；真正的 NS 在 `<domain>  nameserver = xxx` 行。
 
 **常见 NS 归属参考：**
 
@@ -35,7 +45,11 @@ dig +short <domain> NS
 当 NS 归属不明确或使用小众 DNS 时执行：
 
 ```bash
+# Linux / macOS
 dig +short <domain> TXT
+
+# Windows
+nslookup -type=TXT <domain>
 ```
 
 若 TXT 含以下关键词，说明域名可能在挂售或被抢注，**不应添加规则**：
@@ -44,6 +58,8 @@ dig +short <domain> TXT
 - `sedo` — Sedo 域名交易市场
 - `dan.com` — 域名交易平台
 - `purelymail` / `improvmx` 等个人邮件托管服务（大厂不会用）
+
+> **读 nslookup 输出**：TXT 内容在 `<domain>  text = "..."` 行。若该域名无 TXT 记录，nslookup 会改返回 SOA（`primary name server` / `responsible mail addr`）——其中 responsible mail 的域名可辅助判断托管商（如 `hostmaster.hichina.com` → 阿里云/万网）；`dig +short` 此时则输出为空。
 
 ### 3. 输出结论
 
@@ -60,4 +76,6 @@ dig +short <domain> TXT
 
 - NS 指向某家 DNS 服务商不能 100% 确认归属，应结合域名命名规律与用户提供的上下文综合判断
 - 如用户提供的是不带后缀的关键词（如 `bytegecko`），默认补全 `.com` 后查询
-- 批量查询时并发执行所有 `dig` 命令，提高效率
+- DNS 查询命令按运行环境二选一：Unix/macOS 用 `dig`，Windows 用系统自带 `nslookup`（无需额外安装）
+- **不要给 nslookup 加 `2>/dev/null`**：否则会吞掉“域名不存在”的报错（`Non-existent domain`），把不存在的域名误判为查询无结果
+- 批量查询时并发执行所有 dig / nslookup 命令，提高效率
