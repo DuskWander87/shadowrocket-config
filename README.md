@@ -119,8 +119,8 @@ https://raw.githubusercontent.com/DuskWander87/shadowrocket-config/main/v2rayn/r
 |----|---|---|---|
 | 1  | block | UDP 443 | 阻断 QUIC，强制回落 TCP 走代理 |
 | 2  | block | 自定义域名 | 来源 `rules/Reject.list` |
-| 3  | direct | 自定义域名 | 来源 `rules/ChinaDirect.list` |
-| 4  | block | geosite:category-ads-all | 广告拦截（geosite.dat 内置） |
+| 3  | block | geosite:category-ads-all | 广告拦截（geosite.dat 内置） |
+| 4  | direct | 自定义域名 | 来源 `rules/ChinaDirect.list` |
 | 5  | direct | geoip:private | 局域网 IP 直连 |
 | 6  | direct | geosite:private | 局域网域名直连 |
 | 7  | direct | geosite:cn | 国内域名直连（geosite.dat 内置） |
