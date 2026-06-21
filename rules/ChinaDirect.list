@@ -30,3 +30,7 @@ DOMAIN-SUFFIX,zztfly.com
 
 # Washpayer 自助洗护设备扫码支付平台 (阿里云托管，运营主体未确认)
 DOMAIN-SUFFIX,washpayer.com
+
+# iHerb 海淘保健品电商 (直连避免代理触发风控拒单)
+DOMAIN-SUFFIX,iherb.com
+DOMAIN-SUFFIX,iherb.biz
