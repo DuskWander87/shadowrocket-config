@@ -4,7 +4,7 @@
 
 ## 订阅链接
 
-复制以下任一链接到 Shadowrocket 进行订阅。
+复制以下任一链接到 Shadowrocket 进行订阅。电脑端如使用 v2rayN，请直接跳转到下方 [v2rayN 配置](#v2rayn-配置) 段落。
 
 **raw.githubusercontent.com（权威源）：**
 
@@ -100,6 +100,49 @@ https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/rules/
 ```
 
 文件路径保持不变。
+
+## v2rayN 配置
+
+基于同一份规则源（`rules/*.list`），通过构建脚本生成 v2rayN (Xray-core) 兼容的自定义路由规则 JSON。
+
+### 订阅链接
+
+在 v2rayN 中通过「从 URL 导入自定义路由规则」导入：
+
+```
+https://raw.githubusercontent.com/DuskWander87/shadowrocket-config/main/v2rayn/routing.json
+```
+
+### 分流策略
+
+| 序号 | 策略 | 规则 | 说明 |
+|----|---|---|---|
+| 1  | block | UDP 443 | 阻断 QUIC，强制回落 TCP 走代理 |
+| 2  | block | 自定义域名 | 来源 `rules/Reject.list` |
+| 3  | direct | 自定义域名 | 来源 `rules/ChinaDirect.list` |
+| 4  | block | geosite:category-ads-all | 广告拦截（geosite.dat 内置） |
+| 5  | direct | geoip:private | 局域网 IP 直连 |
+| 6  | direct | geosite:private | 局域网域名直连 |
+| 7  | direct | geosite:cn | 国内域名直连（geosite.dat 内置） |
+| 8  | direct | geoip:cn | 国内 IP 直连（geoip.dat 内置） |
+| 9  | proxy | 0-65535 | 兜底全局代理 |
+
+### 构建方式
+
+修改 `rules/*.list` 后，运行构建脚本重新生成：
+
+```bash
+python v2rayn/build.py
+```
+
+输出文件 `v2rayn/routing.json`，推送后 v2rayN 下次刷新即生效。
+
+### 关于 geosite.dat / geoip.dat
+
+v2rayN 路由引擎通过本地 `geosite.dat` 和 `geoip.dat` 文件匹配域名和 IP，无需远程下载规则列表。这两个文件随 Xray-core 附带，v2rayN 会自动更新。数据来源：
+
+- `geosite.dat` — [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) + [Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat) 增强
+- `geoip.dat` — [Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)（基于 MaxMind GeoLite2 + china-operator-ip）
 
 ## 许可证
 
