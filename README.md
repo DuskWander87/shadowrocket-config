@@ -42,16 +42,17 @@ https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/shadowrocket.c
 
 ### 分流策略
 
-| 类型 | 处理 | 来源 |
-|---|---|---|
-| 广告 / 追踪 SDK 补充拦截 | REJECT | 自建 Reject.list |
-| 国内直连补充域名 | DIRECT | 自建 ChinaDirect.list |
-| 局域网 / 解禁名单 | DIRECT | ACL4SSR LocalAreaNetwork / UnBan |
-| 广告域名 | REJECT | ACL4SSR BanAD / BanProgramAD |
-| 国内域名 / 流媒体 | DIRECT | ACL4SSR ChinaDomain / ChinaMedia |
-| 国内 IP / 国内企业 IP | DIRECT | ACL4SSR ChinaIp / ChinaCompanyIp |
-| `GEOIP,CN` | DIRECT | 内置 GeoIP |
-| 其他 | PROXY | FINAL 兜底 |
+| 序号 | 策略 | 规则 | 说明 |
+|---|---|---|---|
+| 1 | REJECT | 自定义广告 / 追踪 SDK | 来源 `rules/Reject.list` |
+| 2 | DIRECT | 自定义国内直连域名 | 来源 `rules/ChinaDirect.list` |
+| 3 | DIRECT | 局域网 / 解禁名单 | ACL4SSR `LocalAreaNetwork.list` / `UnBan.list` |
+| 4 | REJECT | 广告域名 | ACL4SSR `BanAD.list` / `BanProgramAD.list` |
+| 5 | DIRECT | 国内域名 / 流媒体 | ACL4SSR `ChinaDomain.list` / `ChinaMedia.list` |
+| 6 | DIRECT | 国内企业 IP / 国内 IP | ACL4SSR `ChinaCompanyIp.list` / `ChinaIp.list` |
+| 7 | DIRECT | `GEOIP,CN` | 内置 GeoIP 兜底 |
+| 8 | PROXY | 其他流量 | `FINAL,PROXY,dns-failed` 兜底 |
+
 
 ## 维护
 
