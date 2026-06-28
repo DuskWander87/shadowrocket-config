@@ -47,7 +47,17 @@
       "domain:zztfly.com",
       "domain:washpayer.com",
       "domain:iherb.com",
-      "domain:iherb.biz"
+      "domain:iherb.biz",
+      "domain:ccb.com",
+      "domain:ccb.com.cn",
+      "domain:icbc-ltd.com",
+      "domain:bankofchina.com",
+      "domain:bankcomm.com",
+      "domain:psbc.com",
+      "domain:citicbank.com",
+      "domain:cebbank.com",
+      "domain:95528.com",
+      "domain:pingan.com"
     ],
     "enabled": true,
     "remarks": "自定义直连 (DuskWander87/shadowrocket-config)"

@@ -34,3 +34,25 @@ DOMAIN-SUFFIX,washpayer.com
 # iHerb 海淘保健品电商 (直连避免代理触发风控拒单)
 DOMAIN-SUFFIX,iherb.com
 DOMAIN-SUFFIX,iherb.biz
+
+# 中国建设银行 (China Construction Bank, 直连避免代理触发银行风控)
+DOMAIN-SUFFIX,ccb.com
+DOMAIN-SUFFIX,ccb.com.cn
+
+# 其余主流银行 .com 顶级域 (不被 .cn/GEOIP 兜底覆盖, 直连避免代理触发银行风控)
+# 工商银行海外站 (ICBC)
+DOMAIN-SUFFIX,icbc-ltd.com
+# 中国银行 (Bank of China)
+DOMAIN-SUFFIX,bankofchina.com
+# 交通银行 (Bank of Communications)
+DOMAIN-SUFFIX,bankcomm.com
+# 邮储银行 (Postal Savings Bank of China)
+DOMAIN-SUFFIX,psbc.com
+# 中信银行 (China CITIC Bank)
+DOMAIN-SUFFIX,citicbank.com
+# 光大银行 (China Everbright Bank)
+DOMAIN-SUFFIX,cebbank.com
+# 浦发银行客服域名 (SPDB, 95528)
+DOMAIN-SUFFIX,95528.com
+# 平安银行/平安集团 (Ping An, 含 bank.pingan.com)
+DOMAIN-SUFFIX,pingan.com
