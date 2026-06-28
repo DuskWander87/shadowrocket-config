@@ -104,7 +104,9 @@ https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/rules/
 
 ## v2rayN 配置
 
-基于同一份规则源（`rules/*.list`），通过构建脚本生成 v2rayN (Xray-core) 兼容的自定义路由规则 JSON。
+基于同一份自建规则源（`rules/*.list`），通过构建脚本生成 v2rayN (Xray-core) 兼容的自定义路由规则 JSON。
+
+> **重要：v2rayN 端不使用 ACL4SSR。** 与 Shadowrocket 端不同，`routing.json` 完全不引用 ACL4SSR 的任何远程规则集（`ChinaDomain.list` / `ChinaMedia.list` / `BanAD.list` 等）。国内域名/IP 匹配改由 Xray-core 内置的 `geosite:cn` / `geoip:cn` 承担（数据源见下方 [geosite.dat / geoip.dat](#关于-geositedat--geoipdat)），自定义直连/拦截仍来自本仓库 `rules/*.list`。因此两端的国内域名覆盖范围并不完全一致：某些仅被 ACL4SSR `ChinaDomain.list` 收录、而 `geosite:cn` 未含的域名，在 v2rayN 端可能仅靠 `geoip:cn` 兜底——如发现这类域名在 v2rayN 上分流异常，按需补进 `rules/ChinaDirect.list`。
 
 ### 订阅链接
 
