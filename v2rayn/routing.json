@@ -8,12 +8,14 @@
   },
   {
     "port": "",
-    "outboundTag": "block",
+    "outboundTag": "direct",
     "domain": [
-      "domain:anythinktech.com"
+      "domain:feedback-c.zijieapi.com",
+      "domain:iherb.com",
+      "domain:iherb.biz"
     ],
     "enabled": true,
-    "remarks": "自定义拦截 (DuskWander87/shadowrocket-config)"
+    "remarks": "直连白名单 (DuskWander87/shadowrocket-config)"
   },
   {
     "port": "",
@@ -23,47 +25,6 @@
     ],
     "enabled": true,
     "remarks": "广告拦截"
-  },
-  {
-    "port": "",
-    "outboundTag": "direct",
-    "domain": [
-      "domain:bytegecko.com",
-      "domain:bytehwm.com",
-      "domain:bytemastatic.com",
-      "domain:bytecdn.com",
-      "domain:byteeffecttos.com",
-      "domain:bytemaimg.com",
-      "domain:ecombdimg.com",
-      "domain:ecombdapi.com",
-      "domain:ecombdpage.com",
-      "domain:ecombdstatic.com",
-      "domain:idouyinvod.com",
-      "domain:doupay.com",
-      "domain:open-douyin.com",
-      "domain:qishui.com",
-      "domain:zijieapi.com",
-      "domain:cmbimg.com",
-      "domain:joying.com",
-      "domain:feidee.com",
-      "domain:feidee.net",
-      "domain:zztfly.com",
-      "domain:washpayer.com",
-      "domain:iherb.com",
-      "domain:iherb.biz",
-      "domain:ccb.com",
-      "domain:ccb.com.cn",
-      "domain:icbc-ltd.com",
-      "domain:bankofchina.com",
-      "domain:bankcomm.com",
-      "domain:psbc.com",
-      "domain:citicbank.com",
-      "domain:cebbank.com",
-      "domain:95528.com",
-      "domain:pingan.com"
-    ],
-    "enabled": true,
-    "remarks": "自定义直连 (DuskWander87/shadowrocket-config)"
   },
   {
     "port": "",

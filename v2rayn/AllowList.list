@@ -1,0 +1,11 @@
+# v2rayN 专属直连白名单 —— 优先级高于广告拦截
+# 用途：从 geosite:category-ads-all 的误伤中「捞回」功能性域名，强制直连
+# 数据源唯一：本文件手改，由 build.py 生成 routing.json 的「直连白名单」规则
+# 新增域名前须经 domain-verify skill 核实归属
+
+# 剪映 PC 端客服/反馈通道（被 category-ads-all 误拦，导致客服窗口打不开）
+DOMAIN-SUFFIX,feedback-c.zijieapi.com
+
+# iHerb 海淘（海外服务器，不被 geoip:cn 兜底；原 ChinaDirect 直连，解耦后迁入以保直连）
+DOMAIN-SUFFIX,iherb.com
+DOMAIN-SUFFIX,iherb.biz

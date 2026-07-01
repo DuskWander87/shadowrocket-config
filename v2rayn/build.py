@@ -1,5 +1,9 @@
 """
-将 rules/*.list (Shadowrocket 格式) 转换为 v2rayN 自定义路由规则 JSON。
+生成 v2rayN 自定义路由规则 JSON。
+
+v2rayN 端与 Shadowrocket 端已解耦：不再引用 rules/*.list 的自定义拦截/直连，
+仅使用 v2rayn/AllowList.list（直连白名单）+ Xray 内置 geosite/geoip 兜底。
+白名单优先级高于广告拦截，用于从 category-ads-all 误伤中捞回功能性域名。
 
 用法: python v2rayn/build.py
 输出: v2rayn/routing.json
@@ -10,8 +14,9 @@ import re
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-RULES_DIR = REPO_ROOT / "rules"
-OUTPUT_FILE = Path(__file__).resolve().parent / "routing.json"
+V2RAYN_DIR = Path(__file__).resolve().parent
+ALLOWLIST_FILE = V2RAYN_DIR / "AllowList.list"
+OUTPUT_FILE = V2RAYN_DIR / "routing.json"
 
 # Shadowrocket 规则类型 -> v2rayN domain 前缀映射
 DOMAIN_PREFIX_MAP = {
@@ -39,7 +44,16 @@ def parse_list_file(filepath: Path) -> list[str]:
 
 
 def build_routing_rules() -> list[dict]:
-    """构建 v2rayN 路由规则 JSON 数组，对齐 Shadowrocket 完整分流策略。"""
+    """构建 v2rayN 路由规则 JSON 数组。
+
+    链路顺序（first-match-wins，绝不可乱改）：
+        阻断 QUIC → 直连白名单 → 广告拦截 → 局域网 → 国内域名 → 国内 IP → 兜底代理
+
+    关键约束：
+    - 直连白名单必须在广告拦截【之前】—— 否则被 category-ads-all 收录的功能域
+      （如剪映客服 feedback-c.zijieapi.com）会先被拦，白名单形同虚设。
+    - 兜底代理（0-65535）必须在最末 —— 它匹配一切流量，前移会吞掉后续所有规则。
+    """
     rules = []
 
     # 1. 阻断 QUIC (UDP 443) - 强制回落 TCP 走代理
@@ -51,17 +65,16 @@ def build_routing_rules() -> list[dict]:
         "remarks": "阻断 QUIC (UDP 443)",
     })
 
-    # 2. 自定义拦截 (Reject.list -> block)
-    reject_file = RULES_DIR / "Reject.list"
-    if reject_file.exists():
-        domains = parse_list_file(reject_file)
+    # 2. 直连白名单 (AllowList.list -> direct)，优先级高于广告拦截
+    if ALLOWLIST_FILE.exists():
+        domains = parse_list_file(ALLOWLIST_FILE)
         if domains:
             rules.append({
                 "port": "",
-                "outboundTag": "block",
+                "outboundTag": "direct",
                 "domain": domains,
                 "enabled": True,
-                "remarks": "自定义拦截 (DuskWander87/shadowrocket-config)",
+                "remarks": "直连白名单 (DuskWander87/shadowrocket-config)",
             })
 
     # 3. 广告拦截
@@ -73,20 +86,7 @@ def build_routing_rules() -> list[dict]:
         "remarks": "广告拦截",
     })
 
-    # 4. 自定义直连 (ChinaDirect.list -> direct)
-    direct_file = RULES_DIR / "ChinaDirect.list"
-    if direct_file.exists():
-        domains = parse_list_file(direct_file)
-        if domains:
-            rules.append({
-                "port": "",
-                "outboundTag": "direct",
-                "domain": domains,
-                "enabled": True,
-                "remarks": "自定义直连 (DuskWander87/shadowrocket-config)",
-            })
-
-    # 5. 局域网直连
+    # 4. 局域网直连
     rules.append({
         "port": "",
         "outboundTag": "direct",
@@ -102,7 +102,7 @@ def build_routing_rules() -> list[dict]:
         "remarks": "局域网域名直连",
     })
 
-    # 6. 国内域名直连
+    # 5. 国内域名直连
     rules.append({
         "port": "",
         "outboundTag": "direct",
@@ -111,7 +111,7 @@ def build_routing_rules() -> list[dict]:
         "remarks": "国内域名直连",
     })
 
-    # 7. 国内 IP 直连
+    # 6. 国内 IP 直连
     rules.append({
         "port": "",
         "outboundTag": "direct",
@@ -120,7 +120,7 @@ def build_routing_rules() -> list[dict]:
         "remarks": "国内 IP 直连",
     })
 
-    # 8. 兜底代理
+    # 7. 兜底代理
     rules.append({
         "port": "0-65535",
         "outboundTag": "proxy",

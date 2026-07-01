@@ -104,9 +104,9 @@ https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/rules/
 
 ## v2rayN 配置
 
-基于同一份自建规则源（`rules/*.list`），通过构建脚本生成 v2rayN (Xray-core) 兼容的自定义路由规则 JSON。
+基于本仓库自建的直连白名单（`v2rayn/AllowList.list`），通过构建脚本生成 v2rayN (Xray-core) 兼容的自定义路由规则 JSON。
 
-> **重要：v2rayN 端不使用 ACL4SSR。** 与 Shadowrocket 端不同，`routing.json` 完全不引用 ACL4SSR 的任何远程规则集（`ChinaDomain.list` / `ChinaMedia.list` / `BanAD.list` 等）。国内域名/IP 匹配改由 Xray-core 内置的 `geosite:cn` / `geoip:cn` 承担（数据源见下方 [geosite.dat / geoip.dat](#关于-geositedat--geoipdat)），自定义直连/拦截仍来自本仓库 `rules/*.list`。因此两端的国内域名覆盖范围并不完全一致：某些仅被 ACL4SSR `ChinaDomain.list` 收录、而 `geosite:cn` 未含的域名，在 v2rayN 端可能仅靠 `geoip:cn` 兜底——如发现这类域名在 v2rayN 上分流异常，按需补进 `rules/ChinaDirect.list`。
+> **重要：v2rayN 端不使用 ACL4SSR，也不引用 `rules/*.list`，独立管理。** 因 Xray-core 内置的 `geosite:cn` / `geoip:cn` 已覆盖绝大多数国内域名/IP（数据源见下方 [geosite.dat / geoip.dat](#关于-geositedat--geoipdat)），v2rayN 端只需一个「直连白名单」`v2rayn/AllowList.list`（优先级高于广告拦截，用于捞回被广告库误伤的功能性域名），其余国内域名/IP 全部交给 `geosite:cn` / `geoip:cn` 兜底。银行 .com、字节 CDN 等无需手动收录，由 `geoip:cn` 按国内 IP 兜底直连。
 
 ### 订阅链接
 
@@ -121,24 +121,25 @@ https://raw.githubusercontent.com/DuskWander87/shadowrocket-config/main/v2rayn/r
 | 序号 | 策略 | 规则 | 说明 |
 |----|---|---|---|
 | 1  | block | UDP 443 | 阻断 QUIC，强制回落 TCP 走代理 |
-| 2  | block | 自定义域名 | 来源 `rules/Reject.list` |
+| 2  | direct | 自定义域名 | 直连白名单，来源 `v2rayn/AllowList.list`（优先级高于广告拦截） |
 | 3  | block | geosite:category-ads-all | 广告拦截（geosite.dat 内置） |
-| 4  | direct | 自定义域名 | 来源 `rules/ChinaDirect.list` |
-| 5  | direct | geoip:private | 局域网 IP 直连 |
-| 6  | direct | geosite:private | 局域网域名直连 |
-| 7  | direct | geosite:cn | 国内域名直连（geosite.dat 内置） |
-| 8  | direct | geoip:cn | 国内 IP 直连（geoip.dat 内置） |
-| 9  | proxy | 0-65535 | 兜底全局代理 |
+| 4  | direct | geoip:private | 局域网 IP 直连 |
+| 5  | direct | geosite:private | 局域网域名直连 |
+| 6  | direct | geosite:cn | 国内域名直连（geosite.dat 内置） |
+| 7  | direct | geoip:cn | 国内 IP 直连（geoip.dat 内置） |
+| 8  | proxy | 0-65535 | 兜底全局代理 |
 
 ### 构建方式
 
-修改 `rules/*.list` 后，运行构建脚本重新生成：
+修改 `v2rayn/AllowList.list` 后，运行构建脚本重新生成：
 
 ```bash
 python v2rayn/build.py
 ```
 
 输出文件 `v2rayn/routing.json`，推送后 v2rayN 下次刷新即生效。
+
+新增白名单域名前建议先用 `domain-verify` skill 确认归属，避免误添加抢注域名。
 
 ### 关于 geosite.dat / geoip.dat
 

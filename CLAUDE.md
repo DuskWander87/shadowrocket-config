@@ -10,39 +10,40 @@ Shadowrocket（iOS）+ v2rayN（Windows）双端代理分流配置。核心策�
 >
 > | | 国内域名/IP 匹配来源 | 自定义规则 |
 > |---|---|---|
-> | **Shadowrocket** | ACL4SSR 远程规则集（`ChinaDomain` / `ChinaMedia` / `BanAD` 等） + `GEOIP,CN` | `rules/*.list` |
-> | **v2rayN** | **不使用 ACL4SSR**；Xray 内置 `geosite:cn` / `geoip:cn`（数据源 v2fly + Loyalsoldier） | `rules/*.list` |
+> | **Shadowrocket** | ACL4SSR 远程规则集（`ChinaDomain` / `ChinaMedia` / `BanAD` 等） + `GEOIP,CN` | `rules/*.list`（`ChinaDirect` + `Reject`） |
+> | **v2rayN** | **不使用 ACL4SSR**；Xray 内置 `geosite:cn` / `geoip:cn`（数据源 v2fly + Loyalsoldier） | **仅** `v2rayn/AllowList.list`（直连白名单） |
 >
-> v2rayN 端的 `routing.json` **完全不引用 ACL4SSR**。两端共享的只有自建的 `rules/*.list`，国内域名覆盖范围因此并不完全一致——仅被 ACL4SSR 收录而 `geosite:cn` 未含的域名，在 v2rayN 端只能靠 `geoip:cn` 兜底。新增直连域名时，若该域名属于这种情况，应显式写入 `rules/ChinaDirect.list` 以保证两端一致。
+> **v2rayN 端不引用 `rules/*.list`，独立管理。** 因 Xray 内置 `geosite:cn` / `geoip:cn` 已覆盖绝大多数国内域名/IP，v2rayN 端只需一个「直连白名单」`v2rayn/AllowList.list`（优先级高于广告拦截，捞回被广告库误伤的功能域），其余全交给 `geosite:cn` / `geoip:cn` 兜底。银行 .com、字节 CDN 等无需手动收录，由 `geoip:cn` 按国内 IP 兜底直连。
 
 ## 目录结构
 
 | 路径 | 作用 | 是否手改 |
 |------|------|---------|
 | `shadowrocket.conf` | Shadowrocket 主配置（DNS、Rule、URL Rewrite） | 手改 |
-| `rules/ChinaDirect.list` | 国内域名直连补充（ACL4SSR 未覆盖部分） | **手改（唯一数据源）** |
-| `rules/Reject.list` | 自定义广告/追踪拦截 | **手改（唯一数据源）** |
+| `rules/ChinaDirect.list` | 国内域名直连补充（**仅 Shadowrocket 用**） | **手改（唯一数据源）** |
+| `rules/Reject.list` | 自定义广告/追踪拦截（**仅 Shadowrocket 用**） | **手改（唯一数据源）** |
+| `v2rayn/AllowList.list` | v2rayN 直连白名单（捞回被广告库误伤的功能域） | **手改（唯一数据源）** |
 | `v2rayn/routing.json` | v2rayN 路由规则 | **禁止手改，由脚本生成** |
-| `v2rayn/build.py` | 将 `rules/*.list` 转换为 `routing.json` | 手改 |
+| `v2rayn/build.py` | 将 `AllowList.list` 转换为 `routing.json` | 手改 |
 
 ## 核心约定
 
 ### DRY：规则数据源唯一
 
-`rules/*.list` 是直连/拦截规则的**唯一数据源**。`v2rayn/routing.json` 完全由 `v2rayn/build.py` 从 `.list` 生成，**绝不可手改**。
+每份规则清单是其对应配置的**唯一数据源**：
 
-修改规则的标准流程：
+- **Shadowrocket**：`rules/ChinaDirect.list`（直连）、`rules/Reject.list`（拦截），通过远程 `RULE-SET` 直接拉取，订阅更新即生效，无需构建。
+- **v2rayN**：`v2rayn/AllowList.list`（直连白名单）是唯一手改源；`v2rayn/routing.json` 完全由 `v2rayn/build.py` 生成，**绝不可手改**。
+
+修改 v2rayN 规则的标准流程：
 
 ```bash
-# 1. 编辑数据源
-#    rules/ChinaDirect.list（直连）或 rules/Reject.list（拦截）
+# 1. 编辑数据源 v2rayn/AllowList.list（直连白名单）
 # 2. 重新生成 v2rayN 路由
 python v2rayn/build.py
-# 3. 校验两端同步
-grep "新增域名" rules/ChinaDirect.list v2rayn/routing.json
+# 3. 校验落盘
+grep "新增域名" v2rayn/AllowList.list v2rayn/routing.json
 ```
-
-Shadowrocket 端通过远程 `RULE-SET` 直接拉取 `.list`（见 `shadowrocket.conf` 的 `[Rule]`），无需额外构建，订阅更新即生效。
 
 ### build.py 规则映射
 
@@ -61,16 +62,15 @@ Shadowrocket 端通过远程 `RULE-SET` 直接拉取 `.list`（见 `shadowrocket
 代理分流按**首条匹配生效**（first-match-wins），规则顺序即优先级。`build.py` 的 `build_routing_rules()` 输出顺序固定，**绝对不能调整其中的 append 顺序**：
 
 ```
-阻断 QUIC → 自定义拦截 → 广告拦截 → 自定义直连 → 局域网 → 国内域名 → 国内 IP → 兜底代理
+阻断 QUIC → 直连白名单 → 广告拦截 → 局域网 → 国内域名 → 国内 IP → 兜底代理
 ```
 
 关键约束：
 
-- **拦截必须在直连/代理之前** —— 否则广告/追踪域名被前面的直连规则先放行，拦截彻底失效
-- **兜底代理（`0-65535`）必须在最末** —— 它匹配一切流量，一旦前移会吞掉后续所有规则，分流形同虚设
-- **自定义直连在上游 `geosite:cn` / `geoip:cn` 之前** —— 保证手动补充的域名优先于宽泛的国家级匹配
+- **直连白名单必须在广告拦截之前** —— 白名单的唯一目的就是从 `category-ads-all` 误伤中捞回功能域。若排到广告拦截之后，会先被拦，白名单形同虚设。
+- **兜底代理（`0-65535`）必须在最末** —— 它匹配一切流量，一旦前移会吞掉后续所有规则，分流形同虚设。
 
-Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）同理：规则自上而下匹配，`FINAL` 必须置于末尾。
+Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）遵循同一优先级逻辑——自定义规则在广告拦截之前（`Reject → ChinaDirect → ACL4SSR(含 BanAD) → GEOIP,CN → FINAL`），自上而下匹配，`FINAL` 必须置于末尾。两端规则源不同（见「仓库定位」），但都遵循「自定义规则优先于广告拦截、兜底置于最末」。
 
 ### 新增直连域名前必须验证归属
 
@@ -85,12 +85,19 @@ Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）同理：规则自上而�
 
 ### 优先依赖上游规则，不重复收录
 
-`ChinaDirect.list` 只补 **ACL4SSR `ChinaDomain.list` 与 `GEOIP,CN` 均未覆盖**的域名。已被上游覆盖的不重复添加（DRY）：
+**Shadowrocket 端** `ChinaDirect.list` 只补 **ACL4SSR `ChinaDomain.list` 与 `GEOIP,CN` 均未覆盖**的域名。已被上游覆盖的不重复添加（DRY）：
 
 - `.com.cn` / `.cn` 域名：由 `GEOIP,CN,DIRECT`（Shadowrocket）/ `geoip:cn`（v2rayN）兜底，通常无需手动添加
 - ACL4SSR 已收录的域名：如 `abchina.com`、`cmbchina.com`、`ecitic.com`
 
 真正需要手动补的是 **`.com` 顶级域且不被 GEOIP-CN 兜底** 的国内业务域名。
+
+**v2rayN 端** `AllowList.list` 只收两类域名，其余一律交给 `geoip:cn` / `geosite:cn` 兜底，不重复收录：
+
+1. 被 `geosite:category-ads-all` **误伤**、但属功能性通道的域名——不放白名单就会被广告拦截误杀。
+2. **海外服务器**、不被 `geoip:cn` 兜底、又需强制直连的国内业务域名——不放白名单会掉进兜底代理。
+
+判断某域名是否需进白名单：看它是否真被广告库拦（查 v2fly `category-ads` 相关源，或看 v2rayN 日志 `-> block`），或解析 IP 是否在境外。仅国内 IP 且未被误拦的域名**无需**加入。
 
 ### DOMAIN-SUFFIX 优先
 
