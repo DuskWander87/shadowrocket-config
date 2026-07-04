@@ -64,3 +64,4 @@ DOMAIN-SUFFIX,aihot.virxact.com
 
 # 叮咚买菜 (上海壹佰米网络科技有限公司, 日志显示 GEOIP,CN 兜底未生效, 需域名级直连)
 DOMAIN-SUFFIX,ddxq.mobi
+DOMAIN-SUFFIX,ddimg.mobi
