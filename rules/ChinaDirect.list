@@ -58,3 +58,6 @@ DOMAIN-SUFFIX,cebbank.com
 DOMAIN-SUFFIX,95528.com
 # 平安银行/平安集团 (Ping An, 含 bank.pingan.com)
 DOMAIN-SUFFIX,pingan.com
+
+# aihot.virxact.com (DNS 调度型, 需域名级直连)
+DOMAIN-SUFFIX,aihot.virxact.com

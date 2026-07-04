@@ -12,7 +12,8 @@
     "domain": [
       "domain:feedback-c.zijieapi.com",
       "domain:iherb.com",
-      "domain:iherb.biz"
+      "domain:iherb.biz",
+      "domain:aihot.virxact.com"
     ],
     "enabled": true,
     "remarks": "直连白名单 (DuskWander87/shadowrocket-config)"

@@ -9,3 +9,6 @@ DOMAIN-SUFFIX,feedback-c.zijieapi.com
 # iHerb 海淘（海外服务器，不被 geoip:cn 兜底；原 ChinaDirect 直连，解耦后迁入以保直连）
 DOMAIN-SUFFIX,iherb.com
 DOMAIN-SUFFIX,iherb.biz
+
+# aihot.virxact.com (DNS 调度型, 不依赖 geoip:cn 兜底, 需域名级直连)
+DOMAIN-SUFFIX,aihot.virxact.com
