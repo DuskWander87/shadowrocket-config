@@ -102,3 +102,9 @@ Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）遵循同一优先级逻�
 ### DOMAIN-SUFFIX 优先
 
 银行、大厂等多子域场景优先用 `DOMAIN-SUFFIX`（后缀匹配），一条覆盖全部子域（如 `example.com` 覆盖 `www.example.com` / `api.example.com`）。仅在需精确匹配单个域名时用 `DOMAIN`。
+
+## 排查参考
+
+运行时问题排查见 [docs/troubleshooting.md](docs/troubleshooting.md)。遇到代理异常**先查该文档**，避免误改分流规则——许多"看似分流问题"的症状实为系统层原因。已知问题：
+
+- **UWP 应用（Microsoft Store 等）开代理后无法联网** → Windows AppContainer 沙箱禁止 UWP 访问 `127.0.0.1` 回环，系统层问题，非规则问题，修复见排查手册。
