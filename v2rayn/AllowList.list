@@ -12,10 +12,3 @@ DOMAIN-SUFFIX,iherb.biz
 
 # aihot.virxact.com (DNS 调度型, 不依赖 geoip:cn 兜底, 需域名级直连)
 DOMAIN-SUFFIX,aihot.virxact.com
-
-# Microsoft Store / MSN 内容面板图片 CDN（境外域名，国内 CDN 节点可直连）
-# 域名不在 geosite:cn 且解析不落 geoip:cn，走兜底代理会裂图，需域名级直连
-# img-s-msn-com.akamaized.net = MSN 图片 (Akamai GSLB)
-# tc.mm.bing.net = Bing 瓦片缓存 (腾讯 EdgeOne 调度)，覆盖 ts1/ts2/... 全节点
-DOMAIN-SUFFIX,img-s-msn-com.akamaized.net
-DOMAIN-SUFFIX,tc.mm.bing.net
