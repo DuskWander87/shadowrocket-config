@@ -66,6 +66,9 @@ DOMAIN-SUFFIX,aihot.virxact.com
 DOMAIN-SUFFIX,ddxq.mobi
 DOMAIN-SUFFIX,ddimg.mobi
 
+# 爱回收 (上海万物新生环保科技集团有限公司, GEOIP no-resolve 无法匹配域名请求)
+DOMAIN-SUFFIX,aihuishou.com
+
 # 极客时间 (极客邦科技, geekbang.org, 飞书企业邮箱佐证归属)
 DOMAIN-SUFFIX,geekbang.org
 
