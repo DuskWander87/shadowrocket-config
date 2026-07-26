@@ -47,11 +47,12 @@ https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/shadowrocket.c
 | 1 | REJECT | 自定义广告 / 追踪 SDK | 来源 `rules/Reject.list` |
 | 2 | DIRECT | 自定义国内直连域名 | 来源 `rules/ChinaDirect.list` |
 | 3 | DIRECT | 局域网 / 解禁名单 | ACL4SSR `LocalAreaNetwork.list` / `UnBan.list` |
-| 4 | REJECT | 广告域名 | ACL4SSR `BanAD.list` / `BanProgramAD.list` |
-| 5 | DIRECT | 国内域名 / 流媒体 | ACL4SSR `ChinaDomain.list` / `ChinaMedia.list` |
-| 6 | DIRECT | 国内企业 IP / 国内 IP | ACL4SSR `ChinaCompanyIp.list` / `ChinaIp.list` |
-| 7 | DIRECT | `GEOIP,CN` | 内置 GeoIP 兜底 |
-| 8 | PROXY | 其他流量 | `FINAL,PROXY,dns-failed` 兜底 |
+| 4 | DIRECT | Apple / App Store | ACL4SSR `Apple.list`，**美区账号不清楚是否有风险** |
+| 5 | REJECT | 广告域名 | ACL4SSR `BanAD.list` / `BanProgramAD.list` |
+| 6 | DIRECT | 国内域名 / 流媒体 | ACL4SSR `ChinaDomain.list` / `ChinaMedia.list` |
+| 7 | DIRECT | 国内企业 IP / 国内 IP | ACL4SSR `ChinaCompanyIp.list` / `ChinaIp.list` |
+| 8 | DIRECT | `GEOIP,CN` | 内置 GeoIP 兜底 |
+| 9 | PROXY | 其他流量 | `FINAL,PROXY,dns-failed` 兜底 |
 
 
 ## 维护
