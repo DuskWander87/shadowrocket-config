@@ -74,3 +74,9 @@ DOMAIN-SUFFIX,geekbang.org
 
 # 火山引擎 (字节跳动旗下云服务, 子域 CDN/TOS 调度型, GEOIP,CN 兜底不可靠, 需域名级直连)
 DOMAIN-SUFFIX,volces.com
+
+# 收钱吧 (Wosai, 移动支付收单服务商, 飞书/世纪互联 O365 企业邮箱佐证归属)
+# ACL4SSR ChinaDomain 未收录 + GEOIP no-resolve 不匹配域名请求, 需域名级直连
+# wosaimg.com 为其图床 CDN, 子域 CNAME 指向火山引擎 volcgslb, 跨地域解析不一致
+DOMAIN-SUFFIX,shouqianba.com
+DOMAIN-SUFFIX,wosaimg.com
