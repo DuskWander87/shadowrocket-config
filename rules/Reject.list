@@ -5,3 +5,18 @@
 
 # TopOn / AnyThink 广告聚合 SDK (广州, 中国区现为 Taku, anythinktech.com)
 DOMAIN-SUFFIX,anythinktech.com
+
+# 联想营销/分析子域 (lenovo.com 主域走 ChinaDirect 直连, 此处仅拦其营销子域)
+# 本节优先级高于 ChinaDirect.list, 拦截先于直连生效
+# 功能域 download / support / pcsupport.lenovo.com 不在此列, 不受影响
+# Oracle Eloqua 营销自动化 (CNAME -> now.eloqua.com / elqcdn.eloqua.com -> en25.com)
+DOMAIN-SUFFIX,app.update.lenovo.com
+DOMAIN-SUFFIX,forms.lenovo.com
+DOMAIN-SUFFIX,forms-emea.lenovo.com
+DOMAIN-SUFFIX,images.business.lenovo.com
+DOMAIN-SUFFIX,images.smbdirect.lenovo.com
+# Adobe Analytics 埋点 (CNAME -> *.sc.omtrdc.net, first-party 采集域规避第三方 Cookie 限制)
+DOMAIN-SUFFIX,o.lenovo.com
+DOMAIN-SUFFIX,s.lenovo.com
+# 营销邮件点击追踪 (Azure China / 上海蓝云 AS58593)
+DOMAIN-SUFFIX,click.lenovo.com

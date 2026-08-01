@@ -80,3 +80,8 @@ DOMAIN-SUFFIX,volces.com
 # wosaimg.com 为其图床 CDN, 子域 CNAME 指向火山引擎 volcgslb, 跨地域解析不一致
 DOMAIN-SUFFIX,shouqianba.com
 DOMAIN-SUFFIX,wosaimg.com
+
+# 联想 (联想（北京）有限公司 京ICP备11035381号, v2fly geosite data/lenovo 佐证归属)
+# ACL4SSR ChinaDomain/ChinaMedia/ChinaCompanyIp 均未收录
+# NS 为 Akamai (*.akam.net), 国内外 DNS 均解析至 104.69.42.39 (Akamai 境外段), GEOIP,CN 不兜底
+DOMAIN-SUFFIX,lenovo.com
