@@ -72,6 +72,21 @@ grep "新增域名" v2rayn/AllowList.list v2rayn/routing.json
 
 Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）遵循同一优先级逻辑——自定义规则在广告拦截之前（`Reject → ChinaDirect → ACL4SSR(含 BanAD) → GEOIP,CN → FINAL`），自上而下匹配，`FINAL` 必须置于末尾。两端规则源不同（见「仓库定位」），但都遵循「自定义规则优先于广告拦截、兜底置于最末」。
 
+### IPv6 策略（两端能力不对等）
+
+两端都以关闭 IPv6 为目标，但**控制位置与实际能达到的程度完全不同**：
+
+| | 控制位置 | 具体设置 | 效果 |
+|---|---|---|---|
+| **Shadowrocket** | 配置文件内（仓库可控） | `shadowrocket.conf` 的 `ipv6 = false` + `prefer-ipv6 = false` | 彻底关闭 |
+| **v2rayN** | **GUI「DNS 设置 → DNS 基础设置」（仓库不可控）** | 「直连目标解析策略」= `UseIPv4`，另两项保持 `Default`，Happy Eyeballs 关闭 | **仅压住双栈域名，AAAA-only 域名仍走 v6** |
+
+> **v2rayN 端无法彻底禁用 IPv6，这是其功能缺口，非配置错误。** Xray 的 `Use` 系列策略在解析不到目标记录时会**回落回 `AsIs`**（IPv6 优先），要不回落必须用 `Force` 系列，而 v2rayN GUI 的下拉框既无 `Force` 选项也不可手输。**当前决定维持现状**（2026-08-02），日常双栈站点不受影响。
+>
+> **不要试图用路由规则解决。** 曾评估过在 `routing.json` 加 `::/0 → block`，实测无效已移除：系统代理模式下 `routing.domainStrategy = AsIs`，路由只按域名匹配、不解析 IP，以域名发起的连接根本不会去匹配 `ip` 规则。IPv6 是**出站层**问题，路由层够不着。
+>
+> 根因分析、三处源码证据、决定性验证方法与彻底禁用的备选方案，见 [docs/troubleshooting.md](docs/troubleshooting.md)。
+
 ### 新增直连域名前必须验证归属
 
 新增任何直连域名前，**必须**先用 `.claude/skills/domain-verify` skill 核实域名真实存在、归属可信、非抢注。完整查询命令与归属判断规则见该 skill 文档，此处不复述。
@@ -108,3 +123,4 @@ Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）遵循同一优先级逻�
 运行时问题排查见 [docs/troubleshooting.md](docs/troubleshooting.md)。遇到代理异常**先查该文档**，避免误改分流规则——许多"看似分流问题"的症状实为系统层原因。已知问题：
 
 - **UWP 应用（Microsoft Store 等）开代理后无法联网** → Windows AppContainer 沙箱禁止 UWP 访问 `127.0.0.1` 回环，系统层问题，非规则问题，修复见排查手册。
+- **v2rayN 端 IPv6 无法彻底禁用** → Xray 的 `UseIPv4` 遇 AAAA-only 域名会回落 `AsIs`（IPv6 优先），而 GUI 无 `Force` 系列选项。已决定维持现状，改 `routing.json` 无效，见排查手册。
