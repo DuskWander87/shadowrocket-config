@@ -23,6 +23,9 @@ DOMAIN-SUFFIX,qishui.com
 # 亿点云边缘计算 CDN（汽水音乐/抖音业务流量）
 DOMAIN-SUFFIX,ydycdn.com
 
+# 明赋云 CDN（汽水音乐/抖音业务流量）
+DOMAIN-SUFFIX,cjjd14.com
+
 # 招商银行 (China Merchants Bank, cmbchina.com)
 DOMAIN-SUFFIX,cmbimg.com
 DOMAIN-SUFFIX,joying.com
