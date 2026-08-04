@@ -85,3 +85,7 @@ DOMAIN-SUFFIX,wosaimg.com
 # ACL4SSR ChinaDomain/ChinaMedia/ChinaCompanyIp 均未收录
 # NS 为 Akamai (*.akam.net), 国内外 DNS 均解析至 104.69.42.39 (Akamai 境外段), GEOIP,CN 不兜底
 DOMAIN-SUFFIX,lenovo.com
+
+# 脉脉 (北京淘友天下技术有限公司, maimai.cn 短域名, TLS 证书 altnames 佐证归属)
+# ACL4SSR ChinaDomain 未收录 + GEOIP no-resolve 不匹配域名请求, 需域名级直连
+DOMAIN-SUFFIX,taou.com
