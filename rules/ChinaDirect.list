@@ -26,6 +26,9 @@ DOMAIN-SUFFIX,ydycdn.com
 # 明赋云 CDN（汽水音乐/抖音业务流量）
 DOMAIN-SUFFIX,cjjd14.com
 
+# 闲鱼（阿里巴巴旗下）
+DOMAIN-SUFFIX,goofish.com
+
 # 招商银行 (China Merchants Bank, cmbchina.com)
 DOMAIN-SUFFIX,cmbimg.com
 DOMAIN-SUFFIX,joying.com
