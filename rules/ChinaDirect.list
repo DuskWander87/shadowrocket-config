@@ -29,6 +29,9 @@ DOMAIN-SUFFIX,cjjd14.com
 # 闲鱼（阿里巴巴旗下）
 DOMAIN-SUFFIX,goofish.com
 
+# 阿里巴巴集团企业服务
+DOMAIN-SUFFIX,alibaba-inc.com
+
 # 招商银行 (China Merchants Bank, cmbchina.com)
 DOMAIN-SUFFIX,cmbimg.com
 DOMAIN-SUFFIX,joying.com
