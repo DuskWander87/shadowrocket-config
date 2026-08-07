@@ -91,21 +91,25 @@ Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）遵循同一优先级逻�
 
 新增任何直连域名前，**必须**先用 `.claude/skills/domain-verify` skill 核实域名真实存在、归属可信、非抢注。完整查询命令与归属判断规则见该 skill 文档，此处不复述。
 
-硬性底线：
+红线（绝对不得添加）：
 
 - 无 NS 记录（不存在 / 拼写错误）的域名**不得添加**
-- 归属无法确认或疑似抢注（TXT 含 afternic / sedo / dan.com 等挂售特征）的域名**不得添加**
+- 疑似抢注（TXT 含 afternic / sedo / dan.com 等挂售特征）的域名**不得添加**
+
+黄线（可作特例收录，需约束）：
+
+- 归属主体无法确认、但 NS 在国内托管商（阿里云 / 腾讯 DNSPod / 华为云等）且无抢注特征的域名，可作特例收录至 `ChinaDirect.list` 末尾「归属未确认的特例」分区，须完整记录核查事实（NS / TXT / SOA / 命名）与收录理由，待归属明确后迁移至上方对应分组或移除。
 
 目的：避免把抢注或拼写错误的域名误加进直连，造成流量错误放行。
 
 ### 优先依赖上游规则，不重复收录
 
-**Shadowrocket 端** `ChinaDirect.list` 只补 **ACL4SSR `ChinaDomain.list` 与 `GEOIP,CN` 均未覆盖**的域名。已被上游覆盖的不重复添加（DRY）：
+**Shadowrocket 端** `ChinaDirect.list` 只补 **ACL4SSR `ChinaDomain.list` 未覆盖**的域名（IP 兜底带 `no-resolve`，不匹配域名请求，不视为域名兜底）。已被上游覆盖的不重复添加（DRY）：
 
-- `.com.cn` / `.cn` 域名：由 `GEOIP,CN,DIRECT`（Shadowrocket）/ `geoip:cn`（v2rayN）兜底，通常无需手动添加
+- `.com.cn` / `.cn` 域名：两端均由域名规则兜底（Shadowrocket 由 ACL4SSR `ChinaDomain.list`，v2rayN 由 `geosite:cn`），通常无需手动添加。注意 Shadowrocket 的 IP 兜底带 `no-resolve`，**不会为域名触发解析**，纯域名请求跳过 IP 规则落 `FINAL`，不能指望它兜住域名
 - ACL4SSR 已收录的域名：如 `abchina.com`、`cmbchina.com`、`ecitic.com`
 
-真正需要手动补的是 **`.com` 顶级域且不被 GEOIP-CN 兜底** 的国内业务域名。
+真正需要手动补的是 **`.com` 顶级域且不被 ACL4SSR `ChinaDomain.list` 覆盖** 的国内业务域名。
 
 **v2rayN 端** `AllowList.list` 只收两类域名，其余一律交给 `geoip:cn` / `geosite:cn` 兜底，不重复收录：
 
