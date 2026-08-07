@@ -19,6 +19,8 @@ DOMAIN-SUFFIX,douyinliving.com
 DOMAIN-SUFFIX,doupay.com
 DOMAIN-SUFFIX,open-douyin.com
 DOMAIN-SUFFIX,qishui.com
+# 豆包 AI (字节跳动, doubao.com)
+DOMAIN-SUFFIX,doubao.com
 
 # 亿点云边缘计算 CDN（汽水音乐/抖音业务流量）
 DOMAIN-SUFFIX,ydycdn.com
