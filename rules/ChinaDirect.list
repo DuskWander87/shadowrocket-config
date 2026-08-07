@@ -108,11 +108,11 @@ DOMAIN-SUFFIX,lenovo.com
 DOMAIN-SUFFIX,taou.com
 
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
-# sjxydc.com
-#   - NS: 阿里云 (vip3/vip4.alidns.com), 国内托管
-#   - TXT: 随机串, 无挂售特征但也无归属佐证
-#   - 根域无 A 记录, SOA 序列号停留 2023-01-03, 长期未更新
-#   - 命名 sjxydc 拼音缩写歧义大, 归属主体未能确认
-# 收录理由: NS 在国内阿里云, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
+# 收录理由: NS 在国内托管商, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 # IP 兜底不匹配域名请求, 需域名级直连
 DOMAIN-SUFFIX,sjxydc.com
+DOMAIN-SUFFIX,ndcpp.com
+DOMAIN-SUFFIX,kuiniuca.com
+DOMAIN-SUFFIX,z1cdn.com
+DOMAIN-SUFFIX,qiezibenpao.com
+DOMAIN-SUFFIX,xinqiucc.com
