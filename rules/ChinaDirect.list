@@ -107,6 +107,11 @@ DOMAIN-SUFFIX,lenovo.com
 # ACL4SSR ChinaDomain 未收录 + GEOIP no-resolve 不匹配域名请求, 需域名级直连
 DOMAIN-SUFFIX,taou.com
 
+# DeepSeek (杭州深度求索人工智能基础技术研究有限公司)
+# NS 腾讯 DNSPod 企业版 + SPF 指向网易企业邮箱, 解析至 60.204.2.4/2.5 (华为云国内段)
+# ACL4SSR ChinaDomain/ChinaMedia 均未收录, IP 规则带 no-resolve 不匹配域名请求, 需域名级直连
+DOMAIN-SUFFIX,deepseek.com
+
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: NS 在国内托管商, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 # IP 兜底不匹配域名请求, 需域名级直连
