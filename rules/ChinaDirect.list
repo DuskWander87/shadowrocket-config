@@ -112,6 +112,11 @@ DOMAIN-SUFFIX,taou.com
 # ACL4SSR ChinaDomain/ChinaMedia 均未收录, IP 规则带 no-resolve 不匹配域名请求, 需域名级直连
 DOMAIN-SUFFIX,deepseek.com
 
+# 全民简历 (qm=全民 + jianli=简历, 在线简历模板与制作平台)
+# NS 阿里云企业版 (vip3/vip4.alidns.com) + 阿里云企业邮箱 MX/SPF 佐证归属, 无挂售特征
+# ACL4SSR ChinaDomain 未收录, IP 规则带 no-resolve 不匹配域名请求, 需域名级直连
+DOMAIN-SUFFIX,qmjianli.com
+
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: NS 在国内托管商, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 # IP 兜底不匹配域名请求, 需域名级直连
