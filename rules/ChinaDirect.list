@@ -117,6 +117,11 @@ DOMAIN-SUFFIX,deepseek.com
 # ACL4SSR ChinaDomain 未收录, IP 规则带 no-resolve 不匹配域名请求, 需域名级直连
 DOMAIN-SUFFIX,qmjianli.com
 
+# 猎聘 (在线招聘平台, liepin=猎聘)
+# NS 腾讯 DNSPod + 腾讯企业邮 SPF + GlobalSign/Google/Microsoft 域名验证佐证归属, 无挂售特征
+# ACL4SSR ChinaDomain/ChinaMedia 未收录, IP 规则带 no-resolve 不匹配域名请求, 需域名级直连
+DOMAIN-SUFFIX,liepin.com
+
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: NS 在国内托管商, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 # IP 兜底不匹配域名请求, 需域名级直连
