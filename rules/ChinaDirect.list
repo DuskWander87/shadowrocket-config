@@ -126,6 +126,15 @@ DOMAIN-SUFFIX,qmjianli.com
 DOMAIN-SUFFIX,liepin.com
 DOMAIN-SUFFIX,lietou-static.com
 
+# 水滴公司 (北京纵情向前科技有限公司, shuidihuzhu=水滴互助 / shuidichou=水滴筹)
+# 两域 NS 均为阿里云企业版 (vip3/vip4.alidns.com), SPF 同指向 spf.163.com (网易企业邮),
+# shuidihuzhu.com 另有 MS=ms55812257 微软域名验证, 无挂售特征, 同主体归属确证
+# shuidihuzhu.com 解析 81.70.60.252, shuidichou.com CNAME 指向腾讯云 CLB (ap-beijing) → 81.70.60.55
+# 国内外 DNS 返回一致, 无 GSLB 调度; ACL4SSR ChinaDomain 未收录,
+# IP 规则带 no-resolve 不匹配域名请求, 需域名级直连
+DOMAIN-SUFFIX,shuidihuzhu.com
+DOMAIN-SUFFIX,shuidichou.com
+
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: NS 在国内托管商, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 # IP 兜底不匹配域名请求, 需域名级直连
