@@ -34,6 +34,9 @@ DOMAIN-SUFFIX,cjjd14.com
 # 闲鱼 (浙江淘宝网络有限公司)
 DOMAIN-SUFFIX,goofish.com
 
+# 口碑 (阿里巴巴集团本地生活服务平台)
+DOMAIN-SUFFIX,koubei.com
+
 # 阿里巴巴集团企业服务
 DOMAIN-SUFFIX,alibaba-inc.com
 
