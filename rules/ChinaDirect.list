@@ -121,6 +121,16 @@ DOMAIN-SUFFIX,lietou-static.com
 DOMAIN-SUFFIX,shuidihuzhu.com
 DOMAIN-SUFFIX,shuidichou.com
 
+# 微信 (深圳市腾讯计算机系统有限公司, 小程序 servicewechat / SDK 网关 wxgateway)
+DOMAIN-SUFFIX,servicewechat.com
+DOMAIN-SUFFIX,wxgateway.com
+
+# 百度智能云 (北京百度网讯科技有限公司)
+DOMAIN-SUFFIX,baidubce.com
+
+# 快手直播 (北京快手科技有限公司)
+DOMAIN-SUFFIX,kuaishouzt.com
+
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: NS 在国内托管商, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 DOMAIN-SUFFIX,sjxydc.com
