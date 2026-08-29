@@ -169,3 +169,23 @@ curl -s --proxy http://127.0.0.1:7897 https://ipv6.icanhazip.com
 **教训**：验证「是否禁用 IPv6」必须同时满足两个条件——**① 遵守系统代理（模拟真实应用行为）② 目标是 AAAA-only 域名（覆盖回落路径）**。少任何一个都会得出相反的错误结论。
 
 另外，`sockopt.domainStrategy` 已写入 config.json 并不等于 IPv6 已被禁用——要看策略前缀是 `Use` 还是 `Force`。
+
+## BlockHttpDNS 拦截导致依赖 HTTPDNS 的国内 App 卡顿
+
+**症状**：美团外卖等 App 页面加载明显变慢（首屏卡顿）；关闭代理或换配置后恢复。浏览器等不依赖内置 HTTPDNS 的应用不受影响。
+
+**根因**：`shadowrocket.conf` 曾加入 `BlockHttpDNS` 拦截（`RULE-SET, ...BlockHttpDNS.list, REJECT`），其中包含 `DOMAIN,httpdns.meituan.com`。美团 App 内置 HTTPDNS 请求被 REJECT 后，SDK 要等握手失败/超时才回落系统 DNS，首屏因此明显变慢。**同类问题会出现在任何重度依赖内置 HTTPDNS 的国内 App**（支付宝、腾讯系等）。
+
+**处置**：已移除 `BlockHttpDNS` 拦截（提交 `fd6cc5d`）。国内 App 回落系统 DNS 后走 `dns-server` 的阿里/腾讯 UDP（带 ECS），解析与 CDN 调度无损，防泄露目标不受影响。
+
+**相关排查**：同批加入的 `block-quic = all-proxy` 曾先被怀疑为元凶，实测排除（移除后仍慢——美团的 QUIC 走直连，`all-proxy` 不拦直连流量），已恢复（提交 `5128f97`）。
+
+### 排查路径回顾（避免重走弯路）
+
+| 线索 | 指向 |
+|---|---|
+| 移除 block-quic 仍慢 | QUIC 屏蔽不背锅——all-proxy 只拦走代理的 QUIC |
+| 移除 BlockHttpDNS 后恢复 | HTTPDNS 被 REJECT → App 回落系统 DNS 前的超时等待是元凶 |
+| 美团主域被 ACL4SSR 覆盖走直连 | 流量未漏走代理，无需改分流规则 |
+
+**教训**：App（尤其国内大厂 App）卡顿时，先查 `BlockHttpDNS` 拦截——它置于 `[Rule]` 最前、拦截面最大，且症状（卡顿而非断流）容易被误判为网络或分流问题。
