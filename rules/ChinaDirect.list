@@ -139,3 +139,5 @@ DOMAIN-SUFFIX,kuiniuca.com
 DOMAIN-SUFFIX,z1cdn.com
 DOMAIN-SUFFIX,qiezibenpao.com
 DOMAIN-SUFFIX,xinqiucc.com
+# hnsndsj.com (运营主体未确认, 阿里云托管; whois 注册省份河南, 解析至联通河南节点)
+DOMAIN-SUFFIX,hnsndsj.com
