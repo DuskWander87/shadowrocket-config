@@ -57,6 +57,7 @@ DOMAIN-SUFFIX,washpayer.com
 # iHerb 海淘保健品电商 (美国公司，非国内域名；直连避免代理触发风控拒单)
 DOMAIN-SUFFIX,iherb.com
 DOMAIN-SUFFIX,iherb.biz
+DOMAIN-SUFFIX,images-iherb.com
 
 # 中国建设银行 (中国建设银行股份有限公司)
 DOMAIN-SUFFIX,ccb.com
