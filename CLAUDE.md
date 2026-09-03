@@ -45,6 +45,8 @@ python v2rayn/build.py
 grep "新增域名" v2rayn/AllowList.list v2rayn/routing.json
 ```
 
+日常校验 `routing.json` 是否与数据源同步（怀疑被手改时）：`python v2rayn/build.py --check`，不同步会 exit 1 并提示重新生成。
+
 ### build.py 规则映射
 
 `.list` 行格式 `RULE-TYPE,value` → v2rayN domain 前缀：
