@@ -24,6 +24,8 @@ DOMAIN-SUFFIX,qishui.com
 DOMAIN-SUFFIX,bytedanceapi.com
 # 豆包 AI (北京字节跳动科技有限公司)
 DOMAIN-SUFFIX,doubao.com
+# 飞书 (字节跳动旗下企业协作平台，静态资源 CDN)
+DOMAIN-SUFFIX,feishucdn.com
 
 # 亿点云边缘计算 CDN（汽水音乐/抖音业务流量）
 DOMAIN-SUFFIX,ydycdn.com
