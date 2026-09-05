@@ -136,6 +136,10 @@ DOMAIN-SUFFIX,baidubce.com
 # 快手直播 (北京快手科技有限公司)
 DOMAIN-SUFFIX,kuaishouzt.com
 
+# 拼多多 (上海寻梦信息技术有限公司)
+DOMAIN-SUFFIX,pddpic.com
+DOMAIN-SUFFIX,pinduoduo.net
+
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: NS 在国内托管商, 按国内线路直连; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 DOMAIN-SUFFIX,sjxydc.com
