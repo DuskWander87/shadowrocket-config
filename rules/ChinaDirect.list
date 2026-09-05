@@ -5,7 +5,7 @@
 # 仓库: https://github.com/DuskWander87/shadowrocket-config
 # 更新: 手动维护，新增域名请先通过 domain-verify skill 确认归属
 
-# 字节跳动系（ACL4SSR 已收录 bytedance.com / douyin.com / toutiao.com 等主域名）
+# 字节跳动系
 DOMAIN-SUFFIX,bytegecko.com
 DOMAIN-SUFFIX,bytehwm.com
 DOMAIN-SUFFIX,bytemastatic.com
@@ -22,9 +22,10 @@ DOMAIN-SUFFIX,doupay.com
 DOMAIN-SUFFIX,open-douyin.com
 DOMAIN-SUFFIX,qishui.com
 DOMAIN-SUFFIX,bytedanceapi.com
+DOMAIN-SUFFIX,bytetcc.com
 # 豆包 AI (北京字节跳动科技有限公司)
 DOMAIN-SUFFIX,doubao.com
-# 飞书 (字节跳动旗下企业协作平台，静态资源 CDN)
+# 飞书 (北京字节跳动科技有限公司)
 DOMAIN-SUFFIX,feishucdn.com
 
 # 亿点云边缘计算 CDN（汽水音乐/抖音业务流量）
@@ -65,7 +66,7 @@ DOMAIN-SUFFIX,images-iherb.com
 DOMAIN-SUFFIX,ccb.com
 DOMAIN-SUFFIX,ccb.com.cn
 
-# 其余主流银行 .com 顶级域 (不被 .cn/GEOIP 兜底覆盖, 直连避免代理触发银行风控)
+# 其余主流银行 .com 顶级域
 # 中国工商银行海外站
 DOMAIN-SUFFIX,icbc-ltd.com
 # 中国银行
@@ -80,7 +81,7 @@ DOMAIN-SUFFIX,citicbank.com
 DOMAIN-SUFFIX,cebbank.com
 # 上海浦东发展银行客服域名 (95528)
 DOMAIN-SUFFIX,95528.com
-# 中国平安 (含 bank.pingan.com)
+# 中国平安
 DOMAIN-SUFFIX,pingan.com
 
 # virxact (运营主体未确认, DNS 调度型)
@@ -120,12 +121,13 @@ DOMAIN-SUFFIX,qmjianli.com
 DOMAIN-SUFFIX,liepin.com
 DOMAIN-SUFFIX,lietou-static.com
 
-# 水滴公司 (北京纵情向前科技有限公司, 水滴互助 / 水滴筹)
+# 水滴公司 (北京纵情向前科技有限公司)
 DOMAIN-SUFFIX,shuidihuzhu.com
 DOMAIN-SUFFIX,shuidichou.com
 
-# 微信 (深圳市腾讯计算机系统有限公司, 小程序 servicewechat / SDK 网关 wxgateway)
+# 微信 (深圳市腾讯计算机系统有限公司)
 DOMAIN-SUFFIX,servicewechat.com
+DOMAIN-SUFFIX,weixinbridge.com
 DOMAIN-SUFFIX,wxgateway.com
 
 # 百度智能云 (北京百度网讯科技有限公司)
