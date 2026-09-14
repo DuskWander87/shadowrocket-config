@@ -124,6 +124,9 @@ DOMAIN-SUFFIX,servicewechat.com
 DOMAIN-SUFFIX,weixinbridge.com
 DOMAIN-SUFFIX,wxgateway.com
 
+# 腾讯音乐 (腾讯音乐娱乐（深圳）有限公司)
+DOMAIN-SUFFIX,tencentmusic.com
+
 # 百度智能云 (北京百度网讯科技有限公司)
 DOMAIN-SUFFIX,baidubce.com
 
