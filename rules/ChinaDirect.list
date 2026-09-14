@@ -54,9 +54,6 @@ DOMAIN-SUFFIX,feidee.net
 # MobTech 秒验 SDK (上海掌之淘信息技术有限公司)
 DOMAIN-SUFFIX,zztfly.com
 
-# Washpayer 自助洗护扫码支付平台 (运营主体未确认，阿里云托管)
-DOMAIN-SUFFIX,washpayer.com
-
 # iHerb 海淘保健品电商 (美国公司，非国内域名；直连避免代理触发风控拒单)
 DOMAIN-SUFFIX,iherb.com
 DOMAIN-SUFFIX,iherb.biz
@@ -83,9 +80,6 @@ DOMAIN-SUFFIX,cebbank.com
 DOMAIN-SUFFIX,95528.com
 # 中国平安
 DOMAIN-SUFFIX,pingan.com
-
-# virxact (运营主体未确认, DNS 调度型)
-DOMAIN-SUFFIX,aihot.virxact.com
 
 # 叮咚买菜 (上海壹佰米网络科技有限公司)
 DOMAIN-SUFFIX,ddxq.mobi
@@ -114,7 +108,7 @@ DOMAIN-SUFFIX,taou.com
 # DeepSeek (杭州深度求索人工智能基础技术研究有限公司)
 DOMAIN-SUFFIX,deepseek.com
 
-# 全民简历 (运营主体未确认, 阿里云企业版 NS + 企业邮箱)
+# 全民简历
 DOMAIN-SUFFIX,qmjianli.com
 
 # 猎聘 (同道精英（天津）信息技术有限公司)
@@ -151,5 +145,8 @@ DOMAIN-SUFFIX,kuiniuca.com
 DOMAIN-SUFFIX,z1cdn.com
 DOMAIN-SUFFIX,qiezibenpao.com
 DOMAIN-SUFFIX,xinqiucc.com
-# hnsndsj.com (运营主体未确认, 阿里云托管; whois 注册省份河南, 解析至联通河南节点)
 DOMAIN-SUFFIX,hnsndsj.com
+DOMAIN-SUFFIX,ctgapp.com
+DOMAIN-SUFFIX,ctghro.com
+DOMAIN-SUFFIX,washpayer.com
+DOMAIN-SUFFIX,aihot.virxact.com
