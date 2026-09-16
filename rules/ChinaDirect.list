@@ -27,6 +27,25 @@ DOMAIN-SUFFIX,bytetcc.com
 DOMAIN-SUFFIX,doubao.com
 # 飞书 (北京字节跳动科技有限公司)
 DOMAIN-SUFFIX,feishucdn.com
+# 番茄小说 (北京臻鼎科技有限公司)
+DOMAIN-SUFFIX,changdunovel.com
+DOMAIN-SUFFIX,fanqiecopyright.com
+DOMAIN-SUFFIX,fanqienovel.com
+DOMAIN-SUFFIX,fanqieopen.com
+DOMAIN-SUFFIX,fanqieopenpic.com
+DOMAIN-SUFFIX,fanqieopenstatic.com
+DOMAIN-SUFFIX,fanqieopenvod.com
+DOMAIN-SUFFIX,fanqiesdk.com
+DOMAIN-SUFFIX,fanqiesdkpic.com
+DOMAIN-SUFFIX,fanqiesdkstatic.com
+DOMAIN-SUFFIX,fanqiesdkvod.com
+DOMAIN-SUFFIX,fqnovel-op.com
+DOMAIN-SUFFIX,fqnovel.com
+DOMAIN-SUFFIX,fqnovelim.com
+DOMAIN-SUFFIX,fqnovelop.com
+DOMAIN-SUFFIX,fqnovelpic.com
+DOMAIN-SUFFIX,fqnovelstatic.com
+DOMAIN-SUFFIX,fqnovelvod.com
 
 # 亿点云边缘计算 CDN（汽水音乐/抖音业务流量）
 DOMAIN-SUFFIX,ydycdn.com
