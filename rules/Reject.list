@@ -20,3 +20,13 @@ DOMAIN-SUFFIX,o.lenovo.com
 DOMAIN-SUFFIX,s.lenovo.com
 # 营销邮件点击追踪 (Azure China / 上海蓝云 AS58593)
 DOMAIN-SUFFIX,click.lenovo.com
+
+# 美数科技 1RTB 广告交易 / 变现平台 (DSP/SSP/ADX + AdMate 移动广告 SDK)
+DOMAIN-SUFFIX,1rtb.com
+DOMAIN-SUFFIX,1rtb.net
+DOMAIN-SUFFIX,1rtb.cn
+DOMAIN-SUFFIX,adxdata.com
+DOMAIN-SUFFIX,admate.cn
+
+# 疑似广告交易端点 (归属未确认, 仅 adx-hs / img-hs 两个子域有解析, 托管于火山引擎)
+DOMAIN-SUFFIX,ibidmob.com
