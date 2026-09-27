@@ -4,7 +4,7 @@
 
 ## 订阅链接
 
-复制以下任一链接到 Shadowrocket 进行订阅。电脑端如使用 v2rayN，请直接跳转到下方 [v2rayN 配置](#v2rayn-配置) 段落。
+复制以下任一链接到 Shadowrocket 进行订阅。电脑端如使用 v2rayN，请见 [v2rayN 归档说明](docs/v2rayn.md)。
 
 **raw.githubusercontent.com（权威源）：**
 
@@ -103,51 +103,9 @@ https://cdn.jsdelivr.net/gh/DuskWander87/shadowrocket-config@main/rules/
 
 文件路径保持不变。
 
-# v2rayN 配置
+## v2rayN（已停止维护）
 
-基于本仓库自建的直连白名单（`v2rayn/AllowList.list`），通过构建脚本生成 v2rayN (Xray-core) 兼容的自定义路由规则 JSON。
-
-> **重要：v2rayN 端不使用 ACL4SSR，也不引用 `rules/*.list`，独立管理。** 因 Xray-core 内置的 `geosite:cn` / `geoip:cn` 已覆盖绝大多数国内域名/IP（数据源见下方 [geosite.dat / geoip.dat](#关于-geositedat--geoipdat)），v2rayN 端只需一个「直连白名单」`v2rayn/AllowList.list`（优先级高于广告拦截，用于捞回被广告库误伤的功能性域名），其余国内域名/IP 全部交给 `geosite:cn` / `geoip:cn` 兜底。银行 .com、字节 CDN 等无需手动收录，由 `geoip:cn` 按国内 IP 兜底直连。
-
-## 订阅链接
-
-在 v2rayN 中通过「从 URL 导入自定义路由规则」导入：
-
-```
-https://raw.githubusercontent.com/DuskWander87/shadowrocket-config/main/v2rayn/routing.json
-```
-
-## 分流策略
-
-| 序号 | 策略 | 规则 | 说明 |
-|----|---|---|---|
-| 1  | block | UDP 443 | 阻断 QUIC，强制回落 TCP 走代理 |
-| 2  | direct | 自定义域名 | 直连白名单，来源 `v2rayn/AllowList.list`（优先级高于广告拦截） |
-| 3  | block | geosite:category-ads-all | 广告拦截（geosite.dat 内置） |
-| 4  | direct | geoip:private | 局域网 IP 直连 |
-| 5  | direct | geosite:private | 局域网域名直连 |
-| 6  | direct | geosite:cn | 国内域名直连（geosite.dat 内置） |
-| 7  | direct | geoip:cn | 国内 IP 直连（geoip.dat 内置） |
-| 8  | proxy | 0-65535 | 兜底全局代理 |
-
-## 构建方式
-
-修改 `v2rayn/AllowList.list` 后，运行构建脚本重新生成：
-
-```bash
-python v2rayn/build.py
-```
-
-输出文件 `v2rayn/routing.json`，推送后 v2rayN 下次刷新即生效。
-
-新增白名单域名前建议先用 `domain-verify` skill 确认归属，避免误添加抢注域名。
-
-## 关于 geosite.dat / geoip.dat
-
-v2rayN 路由引擎通过本地 `geosite.dat` 和 `geoip.dat` 文件匹配域名和 IP，无需远程下载规则列表。这两个文件随 Xray-core 附带，v2rayN 会自动更新。数据来源：
-
-- `geosite.dat` — [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) + [Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat) 增强
-- `geoip.dat` — [Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)（基于 MaxMind GeoLite2 + china-operator-ip）
+v2rayN 端已于 2026-09-27 停止维护，配置说明、维护流程与排查记录归档至 [docs/v2rayn.md](docs/v2rayn.md)。`v2rayn/` 目录与 `routing.json` 订阅链接继续可用，规则不再更新。
 
 # 许可证
 

@@ -4,90 +4,37 @@
 
 ## 仓库定位
 
-Shadowrocket（iOS）+ v2rayN（Windows）双端代理分流配置。核心策略：国内域名/IP 直连，境外走代理，强化 DNS 防泄露与防污染。
+Shadowrocket（iOS）代理分流配置。核心策略：国内域名/IP 直连，境外走代理，强化 DNS 防泄露与防污染。
 
-> **两端规则源不对等（关键认知）：**
->
-> | | 国内域名/IP 匹配来源 | 自定义规则 |
-> |---|---|---|
-> | **Shadowrocket** | ACL4SSR 远程规则集（`ChinaDomain` / `ChinaMedia` / `BanAD` 等） + `GEOIP,CN` | `rules/*.list`（`ChinaDirect` + `Reject`） |
-> | **v2rayN** | **不使用 ACL4SSR**；Xray 内置 `geosite:cn` / `geoip:cn`（数据源 v2fly + Loyalsoldier） | **仅** `v2rayn/AllowList.list`（直连白名单） |
->
-> **v2rayN 端不引用 `rules/*.list`，独立管理。** 因 Xray 内置 `geosite:cn` / `geoip:cn` 已覆盖绝大多数国内域名/IP，v2rayN 端只需一个「直连白名单」`v2rayn/AllowList.list`（优先级高于广告拦截，捞回被广告库误伤的功能域），其余全交给 `geosite:cn` / `geoip:cn` 兜底。银行 .com、字节 CDN 等无需手动收录，由 `geoip:cn` 按国内 IP 兜底直连。
+> **v2rayN 端已停止维护**（2026-09-27 冻结），`v2rayn/` 目录保留可用。该端的配置说明、维护流程与排查记录归档至 [docs/v2rayn.md](docs/v2rayn.md)，本文件不再承载其约定。
 
 ## 目录结构
 
 | 路径 | 作用 | 是否手改 |
 |------|------|---------|
 | `shadowrocket.conf` | Shadowrocket 主配置（DNS、Rule、URL Rewrite） | 手改 |
-| `rules/ChinaDirect.list` | 国内域名直连补充（**仅 Shadowrocket 用**） | **手改（唯一数据源）** |
-| `rules/Reject.list` | 自定义广告/追踪拦截（**仅 Shadowrocket 用**） | **手改（唯一数据源）** |
-| `v2rayn/AllowList.list` | v2rayN 直连白名单（捞回被广告库误伤的功能域） | **手改（唯一数据源）** |
-| `v2rayn/routing.json` | v2rayN 路由规则 | **禁止手改，由脚本生成** |
-| `v2rayn/build.py` | 将 `AllowList.list` 转换为 `routing.json` | 手改 |
+| `rules/ChinaDirect.list` | 国内域名直连补充 | **手改（唯一数据源）** |
+| `rules/Reject.list` | 自定义广告/追踪拦截 | **手改（唯一数据源）** |
+| `v2rayn/` | v2rayN 端配置（已停止维护） | 不再维护，见 [docs/v2rayn.md](docs/v2rayn.md) |
 
 ## 核心约定
 
 ### DRY：规则数据源唯一
 
-每份规则清单是其对应配置的**唯一数据源**：
-
-- **Shadowrocket**：`rules/ChinaDirect.list`（直连）、`rules/Reject.list`（拦截），通过远程 `RULE-SET` 直接拉取，订阅更新即生效，无需构建。
-- **v2rayN**：`v2rayn/AllowList.list`（直连白名单）是唯一手改源；`v2rayn/routing.json` 完全由 `v2rayn/build.py` 生成，**绝不可手改**。
-
-修改 v2rayN 规则的标准流程：
-
-```bash
-# 1. 编辑数据源 v2rayn/AllowList.list（直连白名单）
-# 2. 重新生成 v2rayN 路由
-python v2rayn/build.py
-# 3. 校验落盘
-grep "新增域名" v2rayn/AllowList.list v2rayn/routing.json
-```
-
-日常校验 `routing.json` 是否与数据源同步（怀疑被手改时）：`python v2rayn/build.py --check`，不同步会 exit 1 并提示重新生成。
-
-### build.py 规则映射
-
-`.list` 行格式 `RULE-TYPE,value` → v2rayN domain 前缀：
-
-| Shadowrocket | v2rayN |
-|---|---|
-| `DOMAIN-SUFFIX` | `domain:` |
-| `DOMAIN` | `full:` |
-| `DOMAIN-KEYWORD` | `keyword:` |
-
-注释行（`#`）与空行被忽略。
+`rules/ChinaDirect.list`（直连）与 `rules/Reject.list`（拦截）各是其规则的**唯一数据源**，通过远程 `RULE-SET` 直接拉取，订阅更新即生效，无需构建。
 
 ### 路由规则顺序绝不可乱改
 
-代理分流按**首条匹配生效**（first-match-wins），规则顺序即优先级。`build.py` 的 `build_routing_rules()` 输出顺序固定，**绝对不能调整其中的 append 顺序**：
+代理分流按**首条匹配生效**（first-match-wins），规则顺序即优先级。
 
-```
-阻断 QUIC → 直连白名单 → 广告拦截 → 局域网 → 国内域名 → 国内 IP → 兜底代理
-```
+`shadowrocket.conf` 的 `[Rule]` 按 `Reject → ChinaDirect → ACL4SSR(含 BanAD) → GEOIP,CN → FINAL` 自上而下匹配。关键约束：
 
-关键约束：
+- **自定义规则必须在广告拦截之前** —— 否则会被 `BanAD` 抢先拦掉，自定义直连形同虚设。
+- **`FINAL` 必须置于末尾** —— 它匹配一切流量，一旦前移会吞掉后续所有规则，分流形同虚设。
 
-- **直连白名单必须在广告拦截之前** —— 白名单的唯一目的就是从 `category-ads-all` 误伤中捞回功能域。若排到广告拦截之后，会先被拦，白名单形同虚设。
-- **兜底代理（`0-65535`）必须在最末** —— 它匹配一切流量，一旦前移会吞掉后续所有规则，分流形同虚设。
+### IPv6 保持彻底关闭
 
-Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）遵循同一优先级逻辑——自定义规则在广告拦截之前（`Reject → ChinaDirect → ACL4SSR(含 BanAD) → GEOIP,CN → FINAL`），自上而下匹配，`FINAL` 必须置于末尾。两端规则源不同（见「仓库定位」），但都遵循「自定义规则优先于广告拦截、兜底置于最末」。
-
-### IPv6 策略（两端能力不对等）
-
-两端都以关闭 IPv6 为目标，但**控制位置与实际能达到的程度完全不同**：
-
-| | 控制位置 | 具体设置 | 效果 |
-|---|---|---|---|
-| **Shadowrocket** | 配置文件内（仓库可控） | `shadowrocket.conf` 的 `ipv6 = false` + `prefer-ipv6 = false` | 彻底关闭 |
-| **v2rayN** | **GUI「DNS 设置 → DNS 基础设置」（仓库不可控）** | 「直连目标解析策略」= `UseIPv4`，另两项保持 `Default`，Happy Eyeballs 关闭 | **仅压住双栈域名，AAAA-only 域名仍走 v6** |
-
-> **v2rayN 端无法彻底禁用 IPv6，这是其功能缺口，非配置错误。** Xray 的 `Use` 系列策略在解析不到目标记录时会**回落回 `AsIs`**（IPv6 优先），要不回落必须用 `Force` 系列，而 v2rayN GUI 的下拉框既无 `Force` 选项也不可手输。**当前决定维持现状**（2026-08-02），日常双栈站点不受影响。
->
-> **不要试图用路由规则解决。** 曾评估过在 `routing.json` 加 `::/0 → block`，实测无效已移除：系统代理模式下 `routing.domainStrategy = AsIs`，路由只按域名匹配、不解析 IP，以域名发起的连接根本不会去匹配 `ip` 规则。IPv6 是**出站层**问题，路由层够不着。
->
-> 根因分析、三处源码证据、决定性验证方法与彻底禁用的备选方案，见 [docs/troubleshooting.md](docs/troubleshooting.md)。
+`shadowrocket.conf` 中 `ipv6 = false` + `prefer-ipv6 = false`，避免 v6 通道绕过 DNS 配置造成泄露。
 
 ### 新增直连域名前必须验证归属
 
@@ -109,19 +56,12 @@ Shadowrocket 端（`shadowrocket.conf` 的 `[Rule]`）遵循同一优先级逻�
 
 ### 优先依赖上游规则，不重复收录
 
-**Shadowrocket 端** `ChinaDirect.list` 只补 **ACL4SSR `ChinaDomain.list` 未覆盖**的域名（IP 兜底带 `no-resolve`，不匹配域名请求，不视为域名兜底）。已被上游覆盖的不重复添加（DRY）：
+`ChinaDirect.list` 只补 **ACL4SSR `ChinaDomain.list` 未覆盖**的域名（IP 兜底带 `no-resolve`，不匹配域名请求，不视为域名兜底）。已被上游覆盖的不重复添加（DRY）：
 
-- `.com.cn` / `.cn` 域名：两端均由域名规则兜底（Shadowrocket 由 ACL4SSR `ChinaDomain.list`，v2rayN 由 `geosite:cn`），通常无需手动添加。注意 Shadowrocket 的 IP 兜底带 `no-resolve`，**不会为域名触发解析**，纯域名请求跳过 IP 规则落 `FINAL`，不能指望它兜住域名
+- `.com.cn` / `.cn` 域名：由 ACL4SSR `ChinaDomain.list` 兜底，通常无需手动添加。注意 Shadowrocket 的 IP 兜底带 `no-resolve`，**不会为域名触发解析**，纯域名请求跳过 IP 规则落 `FINAL`，不能指望它兜住域名
 - ACL4SSR 已收录的域名：如 `abchina.com`、`cmbchina.com`、`ecitic.com`
 
 真正需要手动补的是 **`.com` 顶级域且不被 ACL4SSR `ChinaDomain.list` 覆盖** 的国内业务域名。
-
-**v2rayN 端** `AllowList.list` 只收两类域名，其余一律交给 `geoip:cn` / `geosite:cn` 兜底，不重复收录：
-
-1. 被 `geosite:category-ads-all` **误伤**、但属功能性通道的域名——不放白名单就会被广告拦截误杀。
-2. **海外服务器**、不被 `geoip:cn` 兜底、又需强制直连的国内业务域名——不放白名单会掉进兜底代理。
-
-判断某域名是否需进白名单：看它是否真被广告库拦（查 v2fly `category-ads` 相关源，或看 v2rayN 日志 `-> block`），或解析 IP 是否在境外。仅国内 IP 且未被误拦的域名**无需**加入。
 
 ### DOMAIN-SUFFIX 优先
 
@@ -151,4 +91,4 @@ DOMAIN-SUFFIX,lietou-static.com
 
 ## 排查参考
 
-运行时问题排查见 [docs/troubleshooting.md](docs/troubleshooting.md)。遇到代理异常**先查该文档**，避免误改分流规则——许多"看似分流问题"的症状实为系统层原因。
+Shadowrocket 端运行时排查见 [docs/troubleshooting.md](docs/troubleshooting.md)；v2rayN 端的排查记录见 [docs/v2rayn.md](docs/v2rayn.md)。遇到代理异常**先查对应文档**，避免误改分流规则——许多"看似分流问题"的症状实为系统层原因。
