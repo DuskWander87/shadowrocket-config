@@ -151,7 +151,4 @@ DOMAIN-SUFFIX,lietou-static.com
 
 ## 排查参考
 
-运行时问题排查见 [docs/troubleshooting.md](docs/troubleshooting.md)。遇到代理异常**先查该文档**，避免误改分流规则——许多"看似分流问题"的症状实为系统层原因。已知问题：
-
-- **UWP 应用（Microsoft Store 等）开代理后无法联网** → Windows AppContainer 沙箱禁止 UWP 访问 `127.0.0.1` 回环，系统层问题，非规则问题，修复见排查手册。
-- **v2rayN 端 IPv6 无法彻底禁用** → Xray 的 `UseIPv4` 遇 AAAA-only 域名会回落 `AsIs`（IPv6 优先），而 GUI 无 `Force` 系列选项。已决定维持现状，改 `routing.json` 无效，见排查手册。
+运行时问题排查见 [docs/troubleshooting.md](docs/troubleshooting.md)。遇到代理异常**先查该文档**，避免误改分流规则——许多"看似分流问题"的症状实为系统层原因。
