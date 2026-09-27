@@ -23,6 +23,20 @@ DOMAIN-SUFFIX,open-douyin.com
 DOMAIN-SUFFIX,qishui.com
 DOMAIN-SUFFIX,bytedanceapi.com
 DOMAIN-SUFFIX,bytetcc.com
+# 懂车帝 (重庆懂车帝科技有限公司)
+DOMAIN-SUFFIX,dcarapi.com
+DOMAIN-SUFFIX,dcarvod.com
+DOMAIN-SUFFIX,dcarstatic.com
+DOMAIN-SUFFIX,dcarimg.com
+DOMAIN-SUFFIX,dcarlive.com
+# 懂车帝主站与客户端 (重庆万象优车科技有限公司，懂车帝旗下关联主体)
+DOMAIN-SUFFIX,dongchedi.com
+DOMAIN-SUFFIX,dongchediapp.com
+DOMAIN-SUFFIX,dcdapp.com
+# 四轮引擎 (重庆万象优车科技有限公司)
+DOMAIN-SUFFIX,autoengine.com
+# 懂车聚光 (北京懂车帝科技有限公司)
+DOMAIN-SUFFIX,dongchejuguang.com
 # 豆包 AI (北京字节跳动科技有限公司)
 DOMAIN-SUFFIX,doubao.com
 # 飞书 (北京字节跳动科技有限公司)
