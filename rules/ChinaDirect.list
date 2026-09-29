@@ -141,6 +141,9 @@ DOMAIN-SUFFIX,taou.com
 # DeepSeek (杭州深度求索人工智能基础技术研究有限公司)
 DOMAIN-SUFFIX,deepseek.com
 
+# 点点 AI 搜索 (上海生动诗章科技有限公司，小红书旗下关联主体)
+DOMAIN-SUFFIX,askdiandian.com
+
 # 全民简历
 DOMAIN-SUFFIX,qmjianli.com
 
