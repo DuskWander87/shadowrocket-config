@@ -77,6 +77,9 @@ DOMAIN-SUFFIX,goofish.com
 # 口碑 (阿里巴巴集团本地生活服务平台)
 DOMAIN-SUFFIX,koubei.com
 
+# 盒马 (上海盒礼网络技术服务有限公司，盒马旗下关联主体)
+DOMAIN-SUFFIX,freshippo.com
+
 # 阿里巴巴集团企业服务
 DOMAIN-SUFFIX,alibaba-inc.com
 
@@ -166,6 +169,9 @@ DOMAIN-SUFFIX,servicewechat.com
 DOMAIN-SUFFIX,weixinbridge.com
 DOMAIN-SUFFIX,wxgateway.com
 
+# 腾讯 (深圳市腾讯计算机系统有限公司)
+DOMAIN-SUFFIX,tlivesource.com
+
 # 腾讯音乐 (腾讯音乐娱乐（深圳）有限公司)
 DOMAIN-SUFFIX,tencentmusic.com
 
@@ -205,6 +211,9 @@ DOMAIN-SUFFIX,300hu.com
 
 # 漫步者 (深圳市漫步者科技股份有限公司)
 DOMAIN-SUFFIX,edifier.com
+
+# 数典科技 (杭州数典科技有限公司)
+DOMAIN-SUFFIX,hzshudian.com
 
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: 归属无法确认, 但 NS 在国内托管商或站点排斥代理出口 IP, 需按直连处理; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
