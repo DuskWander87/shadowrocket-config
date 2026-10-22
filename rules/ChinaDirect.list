@@ -184,6 +184,7 @@ DOMAIN-SUFFIX,kuaishouzt.com
 # 拼多多 (上海寻梦信息技术有限公司)
 DOMAIN-SUFFIX,pddpic.com
 DOMAIN-SUFFIX,pinduoduo.net
+DOMAIN-SUFFIX,pddugc.com
 
 # 怪兽充电 (上海挚想科技有限公司)
 DOMAIN-SUFFIX,enmonster.com
@@ -217,6 +218,9 @@ DOMAIN-SUFFIX,edifier.com
 
 # 数典科技 (杭州数典科技有限公司)
 DOMAIN-SUFFIX,hzshudian.com
+
+# 节点之家 CDN (江西节点技术服务有限公司)
+DOMAIN-SUFFIX,tianwenca.com
 
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: 归属无法确认, 但 NS 在国内托管商或站点排斥代理出口 IP, 需按直连处理; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
