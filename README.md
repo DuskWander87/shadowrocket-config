@@ -107,4 +107,6 @@ v2rayN 端已于 2026-09-27 停止维护，配置说明、维护流程与排查�
 
 # 许可证
 
-仅供个人使用。规则集版权归 [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR) 所有。
+本仓库以 [MIT License](LICENSE) 发布，可自由使用、修改与再分发。
+
+ACL4SSR 规则集通过远程 `RULE-SET` 引用，不随本仓库分发；其版权与许可条款归 [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR) 上游所有（上游声明为 CC-BY-SA-4.0，以该仓库当前声明为准）。
