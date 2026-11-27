@@ -238,6 +238,10 @@ DOMAIN-SUFFIX,tongdun.net
 # 南京住房公积金管理中心 (事业单位)
 DOMAIN-SUFFIX,njgjj.com
 
+# 小鹅通 (深圳小鹅网络技术有限公司)
+DOMAIN-SUFFIX,xiaoeknow.com
+DOMAIN-SUFFIX,xiaoe-tech.com
+
 # ===== 以下为归属未确认的特例（置于末尾，与已确认归属的域名区分）=====
 # 收录理由: 归属无法确认, 但 NS 在国内托管商或站点排斥代理出口 IP, 需按直连处理; 置于末尾作为特例, 待归属明确后迁移至上方对应分组或移除
 DOMAIN-SUFFIX,sjxydc.com
